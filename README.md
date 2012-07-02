@@ -1,14 +1,18 @@
-# glfwvbo
+# Odyssey Engine
 
-TODO: project description
+An experimental game engine written in D.
 
 # Instructions
 
-1. Edit the makefile to match your system's configuration
-2. Build the project: `$ make`
-3. ...then run it: `$ make run`
+Note: I've only built this on OSX!
 
-If you use Sublime Text, for convenience I've set it up so that it points to the Derelict3 and Phobos directories on my machine. You'll probably want to change those as well.
+1. Go to the `test` directory
+2. Edit the makefile to match your system's configuration
+3. Build the project: `$ make`
+4. ...then run it: `$ make run`
+5. Alternatively, build and run in one step using `$ make br`
+
+If you use Sublime Text, for my own convenience I've set up a project that points to the Derelict3 and Phobos directories on my machine. You'll probably want to change those paths depending on where you placed them on your system.
 
 # Dependencies
 
