@@ -1,4 +1,4 @@
-module odyssey.math.vector;
+module odyssey.math.vec3;
 
 import std.math;
 import std.string;

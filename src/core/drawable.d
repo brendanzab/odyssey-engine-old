@@ -1,6 +1,6 @@
 module odyssey.core.drawable;
 
-import odyssey.math.vector;
+import odyssey.math.vec3;
 import odyssey.render.shader;
 
 import derelict.opengl3.gl3;
@@ -19,6 +19,7 @@ class Drawable {
     }
     
     void init() {
+        // Create the vertex array object
         glGenVertexArrays(1, &vao);
         glBindVertexArray(vao);
         
@@ -30,14 +31,7 @@ class Drawable {
         
         // Set attribute-pointers to enable communication with the shader
         GLint positionlocation = glGetAttribLocation(shader.programID, "in_Position");
-        glVertexAttribPointer(
-            positionlocation,   // shader attribute
-            3,                  // size
-            GL_FLOAT,           // type
-            GL_FALSE,           // normalized?
-            0,                  // stride
-            null                // array buffer offset
-        );
+        glVertexAttribPointer(positionlocation, 3, GL_FLOAT, GL_FALSE, 0, null);
         glEnableVertexAttribArray(positionlocation);
         
         // Cleanup

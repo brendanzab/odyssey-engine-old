@@ -2,7 +2,7 @@ module test.main;
 
 import odyssey.core.application;
 import odyssey.core.drawable;
-import odyssey.math.vector;
+import odyssey.math.vec3;
 import odyssey.render.shader;
 
 import std.stdio, std.string;
@@ -29,7 +29,6 @@ class Game : Application {
     
     void onInit() {
         shader = new Shader("resources/shader.vert", "resources/shader.frag");
-        
         triangle = new Drawable(vertices, shader);
     }
     
