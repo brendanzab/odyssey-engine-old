@@ -29,48 +29,48 @@ struct Vec3 {
     /* Operations */
 
     /// Returns the negated vector: `-this`
-    Vec3 opNeg() {
+    Vec3 opUnary(string op : "-")() {
         return Vec3(-x, -y, -z);
     }
 
     /// Returns the sum of the vectors: `this + v`
-    Vec3 opAdd(Vec3 v) {
+    Vec3 opBinary(string op : "+")(Vec3 v) {
         return Vec3(x + v.x, y + v.y, z + v.z);
     }
 
     /// Returns the difference between the vectors: `this - v`
-    Vec3 opSub(Vec3 v) {
+    Vec3 opBinary(string op : "-")(Vec3 v) {
         return Vec3(x - v.x, y - v.y, z - v.z);
     }
     
     /// Returns the vector multiplied by a float: `this * f`
-    Vec3 opMul(float f) {
+    Vec3 opBinary(string op : "*")(float f) {
         return Vec3(x*f, y*f, z*f);
     }
 
     /// Dot product: `this * v `
-    float opMul(Vec3 v) {
+    Vec3 opBinary(string op : "*")(Vec3 v) {
         return (x * v.x) + (y * v.y) + (z * v.z);
     }
 
     /* Assignment Operations */
 
     /// Add to vector: `this += v`
-    void opAddAssign(Vec3 v) {
+    void opAssign(string op : "+")(Vec3 v) {
         x += v.x;
         y += v.y;
         z += v.z;
     }
 
     /// Subtract from vector: `this -= v`
-    void opSubAssign(Vec3 v) {
+    void opAssign(string op : "*")(Vec3 v) {
         x -= v.x;
         y -= v.y;
         z -= v.z;
     }
 
     /// Multiply vector: `this *= f`
-    void opMulAssign(float f) {
+    void opAssign(string op : "*")(float f) {
         x *= f;
         y *= f;
         z *= f;
