@@ -109,12 +109,11 @@ struct Vec3 {
             z*v.x - x*v.z,
             x*v.y - y*v.x);
     }
+    
+}
 
-    /* Debug */
-
-    string toString() {
-        return format("(", x, ", ", y, ", ",  z, ")");
-    }
+string toString(Vec3 v) {
+    return format("(", v.x, ", ", v.y, ", ",  v.z, ")");
 }
 
 unittest {
