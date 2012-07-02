@@ -1,7 +1,7 @@
 module test.main;
 
-import odessey.core.application;
-import odessey.render.shader;
+import odyssey.core.application;
+import odyssey.render.shader;
 
 import std.stdio, std.string;
 import derelict.glfw3.glfw3;

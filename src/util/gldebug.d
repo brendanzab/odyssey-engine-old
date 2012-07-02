@@ -1,6 +1,6 @@
-module odessey.util.gldebug;
+module odyssey.util.gldebug;
 
-import odessey.util.prettyout;
+import odyssey.util.prettyout;
 
 import std.stdio, std.conv;
 import derelict.opengl3.gl3;

@@ -1,7 +1,7 @@
-module odessey.render.shader;
+module odyssey.render.shader;
 
-import odessey.util.gldebug;
-import odessey.util.prettyout;
+import odyssey.util.gldebug;
+import odyssey.util.prettyout;
 
 import std.stdio, std.string, std.file;
 import derelict.opengl3.gl3;

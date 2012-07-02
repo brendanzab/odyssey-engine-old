@@ -1,8 +1,8 @@
-module odessey.core.application;
+module odyssey.core.application;
 
-import odessey.util.gldebug;
-import odessey.util.glfwdebug;
-import odessey.util.prettyout;
+import odyssey.util.gldebug;
+import odyssey.util.glfwdebug;
+import odyssey.util.prettyout;
 
 import std.conv, std.stdio, std.string;
 import derelict.glfw3.glfw3;

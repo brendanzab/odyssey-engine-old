@@ -1,6 +1,6 @@
-module odessey.util.prettyout;
+module odyssey.util.prettyout;
 
-import odessey.util.terminal;
+import odyssey.util.terminal;
 
 
 /** Returns an underlined heading string */

@@ -4,7 +4,7 @@
  * See this page on ANSI Terminal Escape Sequences:
  * http://www.termsys.demon.co.uk/vtansi.htm
  */
-module odessey.util.terminal;
+module odyssey.util.terminal;
 
 import std.string : format;
 
