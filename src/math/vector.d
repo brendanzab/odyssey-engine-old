@@ -5,10 +5,10 @@ import std.string;
 
 // Constants
 const {
-    Vec3 v3_zero        = Vec3(0, 0, 0);
-    Vec3 v3_unit_x      = Vec3(1, 0, 0);
-    Vec3 v3_unit_y      = Vec3(0, 1, 0);
-    Vec3 v3_unit_z      = Vec3(0, 0, 1);
+    Vec3 v3_zero    = { 0, 0, 0 };
+    Vec3 v3_unit_x  = { 1, 0, 0 };
+    Vec3 v3_unit_y  = { 0, 1, 0 };
+    Vec3 v3_unit_z  = { 0, 0, 0 };
 }
 
 /**
@@ -19,12 +19,6 @@ struct Vec3 {
     /* Member Variables */
 
     float x, y, z;
-
-    this(float x, float y, float z) {
-        this.x = x;
-        this.y = y;
-        this.z = z;
-    }
 
     /* Operations */
 
@@ -49,8 +43,15 @@ struct Vec3 {
     }
 
     /// Dot product: `this * v `
-    Vec3 opBinary(string op : "*")(Vec3 v) {
+    float opBinary(string op : "*")(Vec3 v) {
         return (x * v.x) + (y * v.y) + (z * v.z);
+    }
+
+    Vec3 cross(Vec3 v) {
+        return Vec3(
+            y*v.z - z*v.y,
+            z*v.x - x*v.z,
+            x*v.y - y*v.x);
     }
 
     /* Assignment Operations */
@@ -78,13 +79,6 @@ struct Vec3 {
 
     /* Other Methods */
 
-    /// Sets variables
-    void set(float x, float y, float z) {
-        this.x = x;
-        this.y = y;
-        this.z = z;
-    }
-
     /// Returns the magnitude of the vector
     float magnitude() {
         return sqrt(x*x + y*y + z*z);
@@ -102,13 +96,6 @@ struct Vec3 {
         y *= n;
         z *= n;
     }
-
-    Vec3 cross(Vec3 v) {
-        return Vec3(
-            y*v.z - z*v.y,
-            z*v.x - x*v.z,
-            x*v.y - y*v.x);
-    }
     
 }
 
@@ -118,8 +105,8 @@ string toString(Vec3 v) {
 
 unittest {
     
-    Vec3 v1 = Vec3(1, 2, 3);
-    Vec3 v2 = Vec3(-1, 2, -2);
+    Vec3 v1 = { 1, 2,  3 };
+    Vec3 v2 = {-1, 2, -2 };
     float f = 3.4;
 
     // Test vector operations
@@ -129,14 +116,14 @@ unittest {
     writeln("let v2 = ", v2.toString);
     writeln("let f = ", f);
     writeln;
-    writeln("opNeg:\t\t",   "\b-v1",        "\t\t= ",   -v1);
-    writeln("opAdd:\t\t",   "v1 + v2",      "\t\t= ",   (v1 + v2).toString);
-    writeln("opSub:\t\t",   "v1 - v2",      "\t\t= ",   (v1 - v2).toString);
-    writeln("opMult:\t\t",  "v1 * f",       "\t\t= ",   v1 * f);
-    writeln("opMult:\t\t",  "v1 * v2",      "\t\t= ",   v1 * v2);
+    writeln("\b-v1",        "\t\t= ",   -v1);
+    writeln("v1 + v2",      "\t\t= ",   (v1 + v2).toString);
+    writeln("v1 - v2",      "\t\t= ",   (v1 - v2).toString);
+    writeln("v1 * f",       "\t\t= ",   v1 * f);
+    writeln("v1 * v2",      "\t\t= ",   (v1 * v2).toString);
     writeln;
-    writeln("normalize:\t", "v1.normalize", "\t= ",     v1.normalize);
-    writeln("magnitude:\t", "v1.magnitude", "\t= ",     v1.magnitude);
-    writeln("cross:\t\t",   "v1.cross(v2)", "\t= ",     v1.cross(v2));
+    writeln("v1.normalize", "\t= ",     v1.normalize);
+    writeln("v1.magnitude", "\t= ",     v1.magnitude);
+    writeln("v1.cross(v2)", "\t= ",     v1.cross(v2));
     
 }

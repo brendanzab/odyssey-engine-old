@@ -18,9 +18,9 @@ class Game : Application {
     
     // 4D positions of the verticies
     Vec3 vertices[] = [
-        Vec3( 0.75,  0.75,  0.0),
-        Vec3( 0.75, -0.75,  0.0),
-        Vec3(-0.75, -0.75,  0.0)
+        { 0.75,  0.75,  0.0 },
+        { 0.75, -0.75,  0.0 },
+        {-0.75, -0.75,  0.0 }
     ];
     
     // The handle for the shader program
