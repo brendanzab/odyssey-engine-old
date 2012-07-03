@@ -66,6 +66,7 @@ struct Vec3 {
 
     /* Assignment Operations */
     
+    /// Set each component of the vector to the given float
     void opAssign()(float f) {
         x = y = z = f;
     }
@@ -82,13 +83,6 @@ struct Vec3 {
         x -= v.x;
         y -= v.y;
         z -= v.z;
-    }
-
-    /// Multiply vector: `this *= f`
-    void opAssign(string op : "*")(float f) {
-        x *= f;
-        y *= f;
-        z *= f;
     }
 
     /// Divide vector: `this /= f`
@@ -112,7 +106,7 @@ struct Vec3 {
         return sqrt(x*x + y*y + z*z);
     }
     
-    /// Scale the magnitude to the specified size
+    /// Set the magnitude whilst preserving the direction
     @property void magnitude(float m) {
         float n = (1 / magnitude) * m;
         x *= n;
