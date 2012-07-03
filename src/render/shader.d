@@ -1,120 +1,148 @@
 module odyssey.render.shader;
 
-import odyssey.util.gldebug;
 import odyssey.util.prettyout;
 
-import std.stdio, std.string, std.file;
+import std.file, std.path, std.stdio, std.string;
+
 import derelict.opengl3.gl3;
 
-class Shader {
+class ShaderProgram {
     
-private:
     GLuint program;
-    GLuint vertexShader;
-    GLuint fragmentShader;
-    
-    string vsPath, fsPath;
-    
-public:
+    alias program this;
     
     this(string vsPath, string fsPath) {
-        this.vsPath = vsPath;
-        this.fsPath = fsPath;
-        
-        init();
+        load(vsPath, fsPath);
     }
     
-    /// The program handle
-    @property GLuint programID() { return program; }
-    
-    /// Enable the shader
-    void bind() {
+    void use(void delegate() statements) {
         glUseProgram(program);
-    }
-    
-    /// Disable the shader
-    void unbind() {
+        statements();
         glUseProgram(0);
     }
     
-    /// Cleans up the shader
-    ~this() {
-        writefln("Destroying shader");
+    void load(string vsPath, string fsPath) {
+        // TODO: check if the program is loaded
         
-        glDetachShader(program, vertexShader);
-        glDetachShader(program, fragmentShader);
+        program = glCreateProgram();
         
-        glDeleteShader(vertexShader);
-        glDeleteShader(fragmentShader);
-        glDeleteProgram(program);
+        vertexShader = new Shader(vsPath);
+        fragmentShader = new Shader(fsPath);
+        
+        program.glAttachShader(vertexShader);
+        program.glAttachShader(fragmentShader);
+        
+        program.glBindAttribLocation(0, "in_Position");
+        program.glBindFragDataLocation(0, "out_Color");
+        
+        program.glLinkProgram();
+        writeLog();
+    }
+    
+    void unload() {
+        writeln("Unloading shader program");
+        
+        program.glDetachShader(vertexShader);
+        program.glDetachShader(fragmentShader);
+        
+        vertexShader.unload();
+        vertexShader.unload();
+        
+        program.glDeleteProgram();
     }
     
 private:
     
-    /// Initialise the shader program
-    void init() {
-        program = glCreateProgram();
+    Shader vertexShader;
+    Shader fragmentShader;
+    
+    void writeLog() {
+        GLint succeeded;
+        program.glGetProgramiv(GL_LINK_STATUS, &succeeded);
         
-        vertexShader = createShader(GL_VERTEX_SHADER, vsPath);
-        fragmentShader = createShader(GL_FRAGMENT_SHADER, fsPath);
-        
-        glAttachShader(program, vertexShader);
-        glAttachShader(program, fragmentShader);
-        
-        glBindAttribLocation(program, 0, "in_Position");
-        glBindFragDataLocation(program, 0, "out_Color");
-        
-        // Link and log errors
-        glLinkProgram(program);
-        writeProgramLog(program);
+        if (!succeeded) {
+            // Get log-length
+            GLint len;
+            program.glGetProgramiv(GL_INFO_LOG_LENGTH, &len);
+            
+            // Get info log and throw exception
+            char[] log = new char[len];
+            program.glGetProgramInfoLog(len, null, cast(char*)log);
+            throw new Exception(format("%s %s", "Program Linker failure:".errorString, log));
+        }
     }
     
-    GLuint createShader(GLenum shaderType, string shaderFile) {
-        // Create the OpenGL shader object
-        GLuint shader = glCreateShader(shaderType);
+}
+
+class Shader {
+    
+    GLuint shader;
+    alias shader this;
+    
+    GLenum type;
+    
+    this(string path) {
+        type = path.shaderType;
+        load(path);
+    }
+    
+    void load(string path) {
+        writefln("Creating %s from %s", type.shaderTypeString, path);
+        
+        shader = glCreateShader(type);
         
         // Read the shader from the file
-        writefln("Reading shader from %s", shaderFile);
-        const char* shaderFileData = toStringz(readText(shaderFile));
-        glShaderSource(shader, 1, &shaderFileData, null);
+        const char* data = path.readText.toStringz;
+        shader.glShaderSource(1, &data, null);
         
-        // Compile and log errors
-        glCompileShader(shader);
-        writeShaderLog(shader);
-        
-        return shader;
+        shader.glCompileShader();
+        writeLog();
     }
     
-    void writeShaderLog(GLuint shader) {
+    void unload() {
+        shader.glDeleteShader();
+    }
+    
+private:
+    
+    void writeLog() {
         // Throw an exception if the compilation fails
         GLint succeeded;
-        glGetShaderiv(shader, GL_COMPILE_STATUS, &succeeded);
+        shader.glGetShaderiv(GL_COMPILE_STATUS, &succeeded);
         
         if (!succeeded) {
             // Get log-length
             GLint len;
-            glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &len);
+            shader.glGetShaderiv(GL_INFO_LOG_LENGTH, &len);
             
             // Get info log and throw exception
-            char[] log=new char[len];
-            glGetShaderInfoLog(shader, len, null, cast(char*)log);
-            throw new Exception(format("%s %s", errorString("GLSL Compile failure:"), log));
+            char[] log = new char[len];
+            shader.glGetShaderInfoLog(len, null, cast(char*)log);
+            throw new Exception(format("%s %s", "GLSL Compile failure:".errorString, log));
         }
     }
-    
-    void writeProgramLog(GLuint program) {
-        GLint succeeded;
-        glGetProgramiv(program, GL_LINK_STATUS, &succeeded);
-        
-        if (!succeeded) {
-            // Get log-length
-            GLint len;
-            glGetProgramiv(program, GL_INFO_LOG_LENGTH, &len);
-            
-            // Get info log and throw exception
-            char[] log=new char[len];
-            glGetProgramInfoLog(program, len, null, cast(char*)log);
-            throw new Exception(format("%s %s", errorString("Program Linker failure:"), log));
-        }
+}
+
+GLenum shaderType(string filename) {
+    switch(filename.extension) {
+        case ".vert":
+            return GL_VERTEX_SHADER;
+        case ".frag":
+            return GL_FRAGMENT_SHADER;
+        case ".geom":
+            return GL_GEOMETRY_SHADER;
+        case "":
+            throw new Exception("The shader file does not have an extension. Must be .vert, .frag or .geom");
+        default:
+            throw new Exception(format("'%s' not supported. Must be .vert, .frag or .geom", extension(filename)));
+    }
+}
+
+string shaderTypeString(GLenum type) {
+    switch (type) {
+        case GL_VERTEX_SHADER:      return "vertex shader";
+        case GL_FRAGMENT_SHADER:    return "fragment shader";
+        case GL_GEOMETRY_SHADER:    return "geometry shader";
+        default: throw new Exception("Invalid shader type");
     }
 }

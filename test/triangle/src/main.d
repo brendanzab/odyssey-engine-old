@@ -2,8 +2,8 @@ module test.main;
 
 import odyssey.core.application;
 import odyssey.core.drawable;
-import odyssey.math.vec3;
 import odyssey.render.shader;
+import odyssey.math.vec3;
 
 import std.stdio, std.string;
 import derelict.glfw3.glfw3;
@@ -24,11 +24,11 @@ class Game : Application {
     ];
     
     // The handle for the shader program
-    Shader shader;
+    ShaderProgram shader;
     Drawable triangle;
     
     void onInit() {
-        shader = new Shader("resources/shader.vert", "resources/shader.frag");
+        shader = new ShaderProgram("resources/shader.vert", "resources/shader.frag");
         triangle = new Drawable(vertices, shader);
     }
     
@@ -38,6 +38,10 @@ class Game : Application {
         
         triangle.render();
         
+    }
+    
+    void onCleanup() {
+        shader.unload();
     }
     
 }

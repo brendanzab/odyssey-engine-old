@@ -9,9 +9,9 @@ class Drawable {
     
     GLuint vao;
     Vec3[] positions;
-    Shader shader;
+    ShaderProgram shader;
     
-    this(Vec3[] positions, ref Shader shader) {
+    this(Vec3[] positions, ref ShaderProgram shader) {
         this.positions = positions;
         this.shader = shader;
         
@@ -30,7 +30,7 @@ class Drawable {
         glBufferData(GL_ARRAY_BUFFER, positions.length * 3 * Vec3.sizeof, positions.ptr, GL_STATIC_DRAW);
         
         // Set attribute-pointers to enable communication with the shader
-        GLint positionlocation = glGetAttribLocation(shader.programID, "in_Position");
+        GLint positionlocation = glGetAttribLocation(shader, "in_Position");
         glVertexAttribPointer(positionlocation, 3, GL_FLOAT, GL_FALSE, 0, null);
         glEnableVertexAttribArray(positionlocation);
         
@@ -40,16 +40,12 @@ class Drawable {
     }
     
     void render() {
-        // Activate the shader program
-        shader.bind();
-        
-        // Draw the Vertex Array Object
-        glBindVertexArray(vao);
-        glDrawArrays(GL_TRIANGLES, 0, 3);   // Start at the 0th index and draw 3 verticies
-        glBindVertexArray(0);
-        
-        // Disable the program
-        shader.unbind();
+        shader.use({
+            // Draw the Vertex Array Object
+            glBindVertexArray(vao);
+            glDrawArrays(GL_TRIANGLES, 0, 3);   // Start at the 0th index and draw 3 verticies
+            glBindVertexArray(0);
+        });
     }
     
     ~this() {
