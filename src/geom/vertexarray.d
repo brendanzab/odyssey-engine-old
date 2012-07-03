@@ -1,13 +1,15 @@
-module odyssey.core.drawable;
+module odyssey.geom.vertexarray;
 
 import odyssey.math.vec3;
 import odyssey.render.shader;
 
 import derelict.opengl3.gl3;
 
-class Drawable {
+class VertexArray {
     
-    GLuint vao;
+    GLuint vertexArray;
+    alias vertexArray this;
+    
     Vec3[] positions;
     ShaderProgram shader;
     
@@ -20,8 +22,8 @@ class Drawable {
     
     void init() {
         // Create the vertex array object
-        glGenVertexArrays(1, &vao);
-        bind({
+        glGenVertexArrays(1, &vertexArray);
+        this.bind({
             // Create the buffer object and bind the vertex data
             GLuint positionBufferObject;
             glGenBuffers(1, &positionBufferObject);
@@ -39,14 +41,14 @@ class Drawable {
     }
     
     void bind(void delegate() statements) {
-        glBindVertexArray(vao);
+        glBindVertexArray(vertexArray);
         statements();
         glBindVertexArray(0);
     }
     
-    void render() {
+    void draw() {
         shader.use({
-            bind({
+            this.bind({
                 glDrawArrays(GL_TRIANGLES, 0, 3);   // Start at the 0th index and draw 3 verticies
             });
         });
@@ -54,6 +56,6 @@ class Drawable {
     
     ~this() {
         glBindVertexArray(0);
-        glDeleteVertexArrays(1, &vao);
+        glDeleteVertexArrays(1, &vertexArray);
     }
 }

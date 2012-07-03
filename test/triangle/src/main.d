@@ -1,7 +1,7 @@
 module test.main;
 
 import odyssey.core.application;
-import odyssey.core.drawable;
+import odyssey.geom.vertexarray;
 import odyssey.render.shader;
 import odyssey.math.vec3;
 
@@ -25,18 +25,18 @@ class Game : Application {
     
     // The handle for the shader program
     ShaderProgram shader;
-    Drawable triangle;
+    VertexArray triangle;
     
     void onInit() {
         shader = new ShaderProgram("resources/shader.vert", "resources/shader.frag");
-        triangle = new Drawable(vertices, shader);
+        triangle = new VertexArray(vertices, shader);
     }
     
     void onRender() {
         // Clear the window
         glClear(GL_COLOR_BUFFER_BIT);
         
-        triangle.render();
+        triangle.draw();
         
     }
     
