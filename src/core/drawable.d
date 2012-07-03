@@ -39,12 +39,17 @@ class Drawable {
         glBindVertexArray(0);
     }
     
+    void bind(void delegate() statements) {
+        glBindVertexArray(vao);
+        statements();
+        glBindVertexArray(0);
+    }
+    
     void render() {
         shader.use({
-            // Draw the Vertex Array Object
-            glBindVertexArray(vao);
-            glDrawArrays(GL_TRIANGLES, 0, 3);   // Start at the 0th index and draw 3 verticies
-            glBindVertexArray(0);
+            bind({
+                glDrawArrays(GL_TRIANGLES, 0, 3);   // Start at the 0th index and draw 3 verticies
+            });
         });
     }
     
