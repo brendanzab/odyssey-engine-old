@@ -1,9 +1,17 @@
 module odyssey.geom.vertexarray;
 
+import odyssey.util.gldebug;
+import odyssey.geom.buffer;
 import odyssey.math.vec3;
 import odyssey.render.shader;
 
 import derelict.opengl3.gl3;
+
+interface Bindable {
+    void bind();
+    void unbind();
+    void use(void delegate() statements);
+}
 
 class VertexArray {
     
@@ -11,6 +19,7 @@ class VertexArray {
     alias vertexArray this;
     
     Vec3[] positions;
+    Buffer buffer;
     ShaderProgram shader;
     
     this(Vec3[] positions, ref ShaderProgram shader) {
@@ -23,33 +32,43 @@ class VertexArray {
     void init() {
         // Create the vertex array object
         glGenVertexArrays(1, &vertexArray);
-        this.bind({
+        this.use({
             // Create the buffer object and bind the vertex data
-            GLuint positionBufferObject;
-            glGenBuffers(1, &positionBufferObject);
-            glBindBuffer(GL_ARRAY_BUFFER, positionBufferObject);
-            glBufferData(GL_ARRAY_BUFFER, positions.length * 3 * Vec3.sizeof, positions.ptr, GL_STATIC_DRAW);
-            
-            // Set attribute-pointers to enable communication with the shader
-            GLint positionlocation = glGetAttribLocation(shader, "in_Position");
-            glVertexAttribPointer(positionlocation, 3, GL_FLOAT, GL_FALSE, 0, null);
-            glEnableVertexAttribArray(positionlocation);
-            
-            // Cleanup
-            glBindBuffer(GL_ARRAY_BUFFER, 0);
+            buffer = new Buffer(positions);
+            buffer.addAttribute(glGetAttribLocation(shader, "in_Position"), GL_FLOAT, 3);
         });
     }
     
-    void bind(void delegate() statements) {
+    void bind() {
         glBindVertexArray(vertexArray);
-        statements();
+    }
+    
+    void unbind() {
         glBindVertexArray(0);
+    }
+    
+    /// Automatically binds/unbinds vertex array between supplied statements
+    void use(void delegate() statements) {
+        bind();
+        /////////////
+        statements();
+        /////////////
+        unbind();
+    }
+    
+    void addAttribute(GLuint location, GLenum type, GLint size=4, GLsizei offset = 0,
+                      GLsizei stride = 0, GLboolean normalized=GL_FALSE) {
+        use({
+            glVertexAttribPointer(location, size, type, normalized, stride, cast(const(GLvoid*))offset);
+            glEnableVertexAttribArray(location);
+            writeGLError();
+        });
     }
     
     void draw() {
         shader.use({
-            this.bind({
-                glDrawArrays(GL_TRIANGLES, 0, 3);   // Start at the 0th index and draw 3 verticies
+            this.use({
+                glDrawArrays(GL_TRIANGLES, 0, 3);
             });
         });
     }
