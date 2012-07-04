@@ -13,7 +13,7 @@ PROJECT_BUILD_PATH		= build
 PROJECT_IMPORT_FLAGS	= -Isrc
 
 ODYSSEY_SRC_ROOT		= ../../src
-ODYSSEY_SRC		 		= $(ODYSSEY_SRC_ROOT)/core/*.d  $(ODYSSEY_SRC_ROOT)/math/vec*.d $(ODYSSEY_SRC_ROOT)/render/*.d $(ODYSSEY_SRC_ROOT)/util/*.d
+ODYSSEY_SRC		 		= $(ODYSSEY_SRC_ROOT)/*/*.d  
 ODYSSEY_INCLUDE_FLAGS	= -I$(ODYSSEY_SRC_ROOT)
 
 DER2_LINKER_FLAGS 		= -L-lDerelictUtil -L-lDerelictGL3 -L-lDerelictGLFW3
