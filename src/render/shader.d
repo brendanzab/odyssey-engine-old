@@ -138,7 +138,7 @@ GLenum shaderType(string filename) {
     }
 }
 
-string shaderTypeString(GLenum type) {
+pure string shaderTypeString(GLenum type) {
     switch (type) {
         case GL_VERTEX_SHADER:      return "vertex shader";
         case GL_FRAGMENT_SHADER:    return "fragment shader";

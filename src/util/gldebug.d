@@ -26,7 +26,7 @@ void writeGLInfo() {
     writeln();
 }
 
-string glErrorString(GLenum glError) {
+pure string glErrorString(GLenum glError) {
     switch(glError) {
         case GL_NO_ERROR:
             return "GL_NO_ERROR";

@@ -6,12 +6,10 @@
  */
 module odyssey.util.terminal;
 
-import std.string : format;
-
 version(Posix) enum TERM_OS_Posix = true;
 else enum TERM_OS_Posix = false;
 
-enum TermDisp {
+enum TermDisp : uint {
     RESET       = 0,
     BRIGHT      = 1,
     DIM         = 2,
@@ -39,12 +37,12 @@ enum TermDisp {
     BG_WHITE    = 47
 }
 
-string esc(TermDisp[] attribs ...) {
+pure string esc(TermDisp[] attribs ...) {
     if(!TERM_OS_Posix) return "";
     
     string escape = "\033[";
     for (int i = 0; i < attribs.length; i++) {
-        escape ~= format("%d", attribs[i]);
+        escape ~= attribs[i];
         
         if (i < attribs.length-1) escape ~= ";";
         else escape ~= "m";
