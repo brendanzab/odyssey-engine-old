@@ -15,10 +15,20 @@ class ShaderProgram {
         load(vsPath, fsPath);
     }
     
-    void use(void delegate() statements) {
+    void bind() {
         glUseProgram(program);
-        statements();
+    }
+    
+    void unbind() {
         glUseProgram(0);
+    }
+    
+    void use(void delegate() statements) {
+        bind();
+        /////////////
+        statements();
+        /////////////
+        unbind();
     }
     
     void load(string vsPath, string fsPath) {
