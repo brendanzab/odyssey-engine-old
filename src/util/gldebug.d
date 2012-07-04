@@ -7,8 +7,15 @@ import derelict.opengl3.gl3;
 
 void writeGLError() {
     GLenum glError = glGetError();
-    if (glError != GL_NO_ERROR)
+    if (glError != GL_NO_ERROR) {
         writeln(errorString("OpenGL Error: "), glErrorString(glError));
+        
+        // abit of a hack - prints the stack trace.
+        try 
+            throw new Exception("OpenGL Error");
+        catch (Exception e)
+            writeln(e.info);
+    }
 }
 
 void writeGLInfo() {
