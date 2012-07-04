@@ -123,7 +123,8 @@ private:
     }
 }
 
-GLenum shaderType(string filename) {
+/// Returns the shader type based on the file extension
+pure GLenum shaderType(string filename) {
     switch(filename.extension) {
         case ".vert":
             return GL_VERTEX_SHADER;
@@ -134,7 +135,8 @@ GLenum shaderType(string filename) {
         case "":
             throw new Exception("The shader file does not have an extension. Must be .vert, .frag or .geom");
         default:
-            throw new Exception(format("'%s' not supported. Must be .vert, .frag or .geom", extension(filename)));
+            string error = "'" ~ extension(filename) ~ "'%s' not supported. Must be .vert, .frag or .geom";
+            throw new Exception(error);
     }
 }
 
