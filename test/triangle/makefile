@@ -31,3 +31,6 @@ run:
 	@./$(PROJECT_BUILD_PATH)/$(PROJECT_NAME)
 
 br: all run
+	
+clean:
+	rm -R build/*
