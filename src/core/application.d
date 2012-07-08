@@ -49,6 +49,7 @@ public final:
             update();
             render();
             
+            writeGLError();
         }
         
         cleanup();

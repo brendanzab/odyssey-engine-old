@@ -1,67 +1,68 @@
-module odyssey.math.matrix;
+module odyssey.math.mat4;
 
-import odyssey.math.vec3;
+import odyssey.math.vec4;
+import std.string : format;
 
 const {
     Mat4 MAT4_IDENTITY =
-        { 1, 0, 0, 0,
-          0, 1, 0, 0,
-          0, 0, 1, 0,
-          0, 0, 0, 1 };
+        Mat4( 1, 0, 0, 0,
+              0, 1, 0, 0,
+              0, 0, 1, 0,
+              0, 0, 0, 1 );
 }
 
 struct Mat4 {
-    
-    float
-        m11, m12, m13, m14,
-        m21, m22, m23, m24,
-        m31, m32, m33, m34,
-        m41, m42, m43, m44;
-    
-    Mat4 transpose() {
-        return Mat4(
-            m11, m21, m31, m41,
-            m12, m22, m32, m42,
-            m13, m23, m33, m43,
-            m14, m24, m34, m44);
+    union {
+        struct {
+            float 
+                m00, m01, m02, m03,
+                m10, m11, m12, m13,
+                m20, m21, m22, m23,
+                m30, m31, m32, m33;
+        };
+        float[4][4] m;
+    };
+
+        
+    this(float m00, float m01, float m02, float m03,
+         float m10, float m11, float m12, float m13,
+         float m20, float m21, float m22, float m23,
+         float m30, float m31, float m32, float m33) {
+        
+        m[0][0]=m00; m[0][1]=m01; m[0][2]=m02; m[0][3]=m03;
+        m[1][0]=m10; m[1][1]=m11; m[1][2]=m12; m[1][3]=m13;
+        m[2][0]=m20; m[2][1]=m21; m[2][2]=m22; m[2][3]=m23;
+        m[3][0]=m30; m[3][1]=m31; m[3][2]=m32; m[3][3]=m33;
     }
     
-    Mat4 opBinary(string op : "*")(float f) {
-        return Mat4(
-            m11*f, m12*f, m13*f, m14*f,
-            m21*f, m22*f, m23*f, m24*f,
-            m31*f, m32*f, m33*f, m34*f,
-            m41*f, m42*f, m43*f, m44*f);
+    this(float f) {
+        m[0][0]=f; m[0][1]=0; m[0][2]=0; m[0][3]=0;
+        m[1][0]=0; m[1][1]=f; m[1][2]=0; m[1][3]=0;
+        m[2][0]=0; m[2][1]=0; m[2][2]=f; m[2][3]=0;
+        m[3][0]=0; m[3][1]=0; m[3][2]=0; m[3][3]=f;
     }
     
-    Vec4 opBinary(string op : "*")(Vec4 v) {
-        return Vec4 (
-            m11*v.x + m12*v.y + m13*v.z + m14*v.w,
-            m21*v.x + m22*v.y + m23*v.z + m24*v.w,
-            m31*v.x + m32*v.y + m33*v.z + m34*v.w,
-            m41*v.x + m42*v.y + m43*v.z + m44*v.w);
-    }
-    
-    void opAssign(string op : "*")(float f) {
-        m11*=f; m12*=f; m13*=f; m14*=f;
-        m21*=f; m22*=f; m23*=f; m24*=f;
-        m31*=f; m32*=f; m33*=f; m34*=f;
-        m41*=f; m42*=f; m43*=f; m44*=f;
+    string toString() {
+        return 
+            format("Mat4(%f.2\t%f.2\t%f.2\t%f.2\n", m00, m01, m02, m03)~
+            format("     %f.2\t%f.2\t%f.2\t%f.2\n", m10, m11, m12, m13)~
+            format("     %f.2\t%f.2\t%f.2\t%f.2\n", m20, m21, m22, m23)~
+            format("     %f.2\t%f.2\t%f.2\t%f.2)",  m30, m31, m32, m33);
     }
     
 }
 
-/*
+
 Mat4 perspective(float fov, float aspectRatio, float near, float far) {
-    
+    return Mat4(1);
 }
 
-Mat4 translate(Mat4 m, Vec3 v) {
+Mat4 translate(Mat4 m, Vec4 v) {
     Mat4 result = m;
-    
+    return result;
 }
 
-Mat4 scale(Mat4 m, Vec3 v) {
-    
+Mat4 scale(Mat4 m, Vec4 v) {
+    Mat4 result = m;
+    return result;
 }
-*/

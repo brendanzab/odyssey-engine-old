@@ -1,14 +1,13 @@
 module odyssey.math.vec3;
 
 import std.math;
-import std.string;
 
 // Constants
 const {
-    Vec3 v3_zero    = { 0, 0, 0 };
-    Vec3 v3_unit_x  = { 1, 0, 0 };
-    Vec3 v3_unit_y  = { 0, 1, 0 };
-    Vec3 v3_unit_z  = { 0, 0, 0 };
+    Vec3 VEC3_ZERO    = Vec3( 0, 0, 0 );
+    Vec3 VEC3_UNIT_X  = Vec3( 1, 0, 0 );
+    Vec3 VEC3_UNIT_Y  = Vec3( 0, 1, 0 );
+    Vec3 VEC3_UNIT_Z  = Vec3( 0, 0, 1 );
 }
 
 /**
@@ -16,7 +15,12 @@ const {
  */
 struct Vec3 {
 
-    float x, y, z;
+    union {
+        struct { float i, j, k; }
+        struct { float x, y, z; }
+        struct { float r, g, b; }
+        float[3] v;
+    }
 
     /* Operations */
 
@@ -133,10 +137,10 @@ struct Vec3 {
 // just printing things out at the moment... :P
 unittest {
     
-    import std.stdio;
+    //import std.stdio;
     
-    Vec3 v1 = { 1, 2,  3 };
-    Vec3 v2 = {-1, 2, -2 };
+    Vec3 v1 = Vec3( 1, 2,  3 );
+    Vec3 v2 = Vec3(-1, 2, -2 );
     float f = 3.4;
     
     assert(-v2     == Vec3(1, -2, 2));
@@ -145,28 +149,28 @@ unittest {
     //assert(v1 * f  == Vec3(3.4, 6.8, 10.2));
     assert(v1 * v2 == -3);
 
-    // Test vector operations
-    writeln("Test Vec3 Operations:");
-    writeln;
-    writeln("let v1 = ", v1);
-    writeln("let v2 = ", v2);
-    writeln("let f  = ", f);
-    writeln;
-    writeln("-v1          = ",   -v1);
-    writeln("v1 + v2      = ",   v1 + v2);
-    writeln("v1 - v2      = ",   v1 - v2);
-    writeln("v1 * f       = ",   v1 * f);
-    writeln("v1 * v2      = ",   v1 * v2);
-    writeln;
-    writeln("v1.normalize = ",     v1.normalize);
-    writeln("v1.magnitude = ",     v1.magnitude);
-    writeln("v1.cross(v2) = ",     v1.cross(v2));
-    writeln;
+    //// Test vector operations
+    //writeln("Test Vec3 Operations:");
+    //writeln;
+    //writeln("let v1 = ", v1);
+    //writeln("let v2 = ", v2);
+    //writeln("let f  = ", f);
+    //writeln;
+    //writeln("-v1          = ",   -v1);
+    //writeln("v1 + v2      = ",   v1 + v2);
+    //writeln("v1 - v2      = ",   v1 - v2);
+    //writeln("v1 * f       = ",   v1 * f);
+    //writeln("v1 * v2      = ",   v1 * v2);
+    //writeln;
+    //writeln("v1.normalize = ",     v1.normalize);
+    //writeln("v1.magnitude = ",     v1.magnitude);
+    //writeln("v1.cross(v2) = ",     v1.cross(v2));
+    //writeln;
     
-    v1.magnitude = 5;
-    writeln("v1.magnitude = 5");
-    writeln("v1 = ", v1);
-    v1 = 0;
-    writeln("v1 = 0");
-    writeln("v1 = ", v1);
+    //v1.magnitude = 5;
+    //writeln("v1.magnitude = 5");
+    //writeln("v1 = ", v1);
+    //v1 = 0;
+    //writeln("v1 = 0");
+    //writeln("v1 = ", v1);
 }
