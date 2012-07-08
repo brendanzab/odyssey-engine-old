@@ -31,12 +31,16 @@ struct Vec3 {
 
     /// Returns the sum of the vectors: `this + v`
     Vec3 opBinary(string op : "+")(Vec3 v) {
-        return Vec3(x + v.x, y + v.y, z + v.z);
+        return Vec3(x + v.x,
+                    y + v.y,
+                    z + v.z);
     }
 
     /// Returns the difference between the vectors: `this - v`
     Vec3 opBinary(string op : "-")(Vec3 v) {
-        return Vec3(x - v.x, y - v.y, z - v.z);
+        return Vec3(x - v.x,
+                    y - v.y,
+                    z - v.z);
     }
     
     /// Returns the vector multiplied by a float: `this * f`
@@ -49,18 +53,7 @@ struct Vec3 {
         return (x * v.x) + (y * v.y) + (z * v.z);
     }
     
-    /// Returns the vector divided by a float: `this * f`
-    Vec3 opBinary(string op : "/")(float f) {
-        f = 1/f;
-        return Vec3(x*f, y*f, z*f);
-    }
-    
-    /// Returns the vector divided by another vector `this / v`
-    float opBinary(string op : "/")(Vec3 v) {
-        f = 1/f;
-        return Vec3(x * v.x, y * v.y, z * v.z);
-    }
-
+    /// Returns the cross product
     Vec3 cross(Vec3 v) {
         return Vec3(
             y*v.z - z*v.y,
@@ -87,21 +80,6 @@ struct Vec3 {
         x -= v.x;
         y -= v.y;
         z -= v.z;
-    }
-
-    /// Divide vector: `this /= f`
-    void opAssign(string op : "/")(float f) {
-        f = 1/f;
-        x *= f;
-        y *= f;
-        z *= f;
-    }
-
-    /// Divide from vector: `this /= v`
-    void opAssign(string op : "/")(Vec3 v) {
-        x /= v.x;
-        y /= v.y;
-        z /= v.z;
     }
 
     /* Other Methods */
