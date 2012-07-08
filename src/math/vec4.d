@@ -9,7 +9,7 @@ struct Vec4 {
         struct { float i, j, k, l; }
         struct { float x, y, z, w; }
         struct { float r, g, b, a; }
-        float[3] v;
+        float[4] v;
     }
 
     /* Operations */
@@ -93,7 +93,7 @@ struct Vec4 {
     }
 
     /// Returns the normalized vector
-    Vec3 normalize() {
+    Vec4 normalize() {
         float n = 1 / magnitude;
         return this * n;
     }

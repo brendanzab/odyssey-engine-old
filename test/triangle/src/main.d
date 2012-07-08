@@ -42,10 +42,10 @@ class Game : Application {
         float near = 0.1;
         float far = 100;
         
-        // WARNING: these functions haven't been implemented yet!
-        projectionMatrix = perspective(fov, windowWidth / windowHeight, near, far);
-        viewMatrix       = translate(Mat4(1), Vec4(0, 0, -5));   // translate view back 5 units
-        modelMatrix      = scale(Mat4(1), Vec4(0.5));            // halve the size of the model
+        //// WARNING: these functions haven't been implemented yet!
+        //projectionMatrix = perspective(fov, windowWidth / windowHeight, near, far);
+        //viewMatrix       = translate(Mat4(1), Vec4(0, 0, -5));   // translate view back 5 units
+        //modelMatrix      = scale(Mat4(1), Vec4(0.5));            // halve the size of the model
         
         shader = new ShaderProgram("resources/shader.vert", 
                                    "resources/shader.frag");
