@@ -114,16 +114,16 @@ struct Mat3 {
     
     Mat3 opBinary(string op : "+")(Mat3 m) {
         return Mat3(
-            (m[0][0] + m.m[0][0]), (m[0][1] + m.m[0][1]), (m[0][2] + m.m[0][2]),
-            (m[1][0] + m.m[1][0]), (m[1][1] + m.m[1][1]), (m[1][2] + m.m[1][2]),
-            (m[2][0] + m.m[2][0]), (m[2][1] + m.m[2][1]), (m[2][2] + m.m[2][2]));
+            this.col!0 + m.col!0,
+            this.col!1 + m.col!1,
+            this.col!2 + m.col!2);
     }
     
     Mat3 opBinary(string op : "-")(Mat3 m) {
         return Mat3(
-            (m[0][0] - m.m[0][0]), (m[0][1] - m.m[0][1]), (m[0][2] - m.m[0][2]),
-            (m[1][0] - m.m[1][0]), (m[1][1] - m.m[1][1]), (m[1][2] - m.m[1][2]),
-            (m[2][0] - m.m[2][0]), (m[2][1] - m.m[2][1]), (m[2][2] - m.m[2][2]));
+            this.col!0 - m.col!0,
+            this.col!1 - m.col!1,
+            this.col!2 - m.col!2);
     }
     
     /**
@@ -131,9 +131,9 @@ struct Mat3 {
      */
     Mat3 opBinary(string op : "*")(float f) {
         return Mat3(
-            (m[0][0] * f), (m[0][1] * f), (m[0][2] * f),
-            (m[1][0] * f), (m[1][1] * f), (m[1][2] * f),
-            (m[2][0] * f), (m[2][1] * f), (m[2][2] * f));
+            this.col!0 * f,
+            this.col!1 * f,
+            this.col!2 * f);
     }
     
     /**
@@ -141,9 +141,9 @@ struct Mat3 {
      */
     Vec3 opBinary(string op : "*")(Vec3 v) {
         return Vec3 (
-            row!0 * v,
-            row!1 * v,
-            row!2 * v);
+            this.row!0 * v,
+            this.row!1 * v,
+            this.row!2 * v);
     }
     
     /**
