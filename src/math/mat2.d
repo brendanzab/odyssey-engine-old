@@ -73,7 +73,7 @@ struct Mat2 {
      */
     Mat2 opBinary(string op : "-")(Mat2 m) {
         return Mat2(this.col!0 - m.col!0,
-                    this.col!1 - m.col!1;
+                    this.col!1 - m.col!1);
     }
     
     /**
