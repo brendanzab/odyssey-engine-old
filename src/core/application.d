@@ -25,7 +25,7 @@ private:
 public:
     
     void onInit() {}
-    void onUpdate() {}
+    void onUpdate(float tpf) {}
     void onRender() {}
     void onCleanup() {}
 
@@ -42,11 +42,15 @@ public final:
         init();
         
         running = true;
+        
+        Timer timer;
+        timer.init();
+        
         while (glfwIsWindow(window) && running) {
             // Poll events
             glfwPollEvents();
             
-            update();
+            update(timer.update());
             render();
             
             writeGLError();
@@ -115,11 +119,12 @@ public final:
         glClearColor(0.2, 0.2, 0.2, 1);
     }
     
-    void update() {
+    /// tpf - the time in seconds
+    void update(float tpf) {
         
         // Do stuff
         
-        onUpdate();
+        onUpdate(tpf);
     }
     
     void render() {
@@ -139,4 +144,24 @@ public final:
         onCleanup();
         
     }
+}
+
+struct Timer {
+    
+    private double time;
+    private double delta;
+    
+    void init() {
+        time = glfwGetTime();
+    }
+    
+    /// update and return the delta time in seconds 
+    double update() {
+        double oldTime = time;
+        time = glfwGetTime();
+        delta = time - oldTime;
+        
+        return delta;
+    }
+    
 }
