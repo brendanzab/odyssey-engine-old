@@ -41,10 +41,10 @@ public final:
     void run() {
         init();
         
-        running = true;
-        
         Timer timer;
-        timer.init();
+        timer.update();
+        
+        running = true;
         
         while (glfwIsWindow(window) && running) {
             // Poll events
@@ -52,6 +52,8 @@ public final:
             
             update(timer.update());
             render();
+            
+            //writefln("%.2f fps", 60/timer.delta);
             
             writeGLError();
         }
@@ -147,21 +149,23 @@ public final:
 }
 
 struct Timer {
-    
-    private double time;
-    private double delta;
-    
-    void init() {
-        time = glfwGetTime();
-    }
+    private double oldTime;
+    private double newTime;
     
     /// update and return the delta time in seconds 
     double update() {
-        double oldTime = time;
-        time = glfwGetTime();
-        delta = time - oldTime;
+        oldTime = newTime;
+        newTime = glfwGetTime();
         
-        return delta;
+        return delta();
     }
     
+    double delta() {
+        return newTime - oldTime;
+    }
+    
+    /// return the time as of the 
+    double time() {
+        return newTime;
+    //}
 }
