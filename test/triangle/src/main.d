@@ -26,26 +26,11 @@ class Game : Application {
         Vec3(-0.75, -0.75,  0.0 )
     ];
     
-    Mat4 projectionMatrix;  // normally constant (stores the perspective)
-    Mat4 viewMatrix;        // 
-    Mat4 modelMatrix;
-    
     // The handle for the shader program
     ShaderProgram shader;
     VertexArray triangle;
     
     void onInit() {
-        
-        float fov = 60.0;
-        int windowWidth = 640;
-        int windowHeight = 480;
-        float near = 0.1;
-        float far = 100;
-        
-        //// WARNING: these functions haven't been implemented yet!
-        //projectionMatrix = perspective(fov, windowWidth / windowHeight, near, far);
-        //viewMatrix       = translate(Mat4(1), Vec4(0, 0, -5));   // translate view back 5 units
-        //modelMatrix      = scale(Mat4(1), Vec4(0.5));            // halve the size of the model
         
         shader = new ShaderProgram("resources/shader.vert", 
                                    "resources/shader.frag");
