@@ -167,5 +167,5 @@ struct Timer {
     /// return the time as of the 
     double time() {
         return newTime;
-    //}
+    }
 }
