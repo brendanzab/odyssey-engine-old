@@ -56,7 +56,7 @@ class ShaderProgram {
         program.glDetachShader(fragmentShader);
         
         vertexShader.unload();
-        vertexShader.unload();
+        fragmentShader.unload();
         
         program.glDeleteProgram();
     }
