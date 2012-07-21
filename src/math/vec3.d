@@ -1,13 +1,14 @@
 module odyssey.math.vec3;
 
-import std.math;
+import std.math : sqrt;
 
 // Constants
 const {
-    Vec3 VEC3_ZERO    = Vec3( 0, 0, 0 );
-    Vec3 VEC3_UNIT_X  = Vec3( 1, 0, 0 );
-    Vec3 VEC3_UNIT_Y  = Vec3( 0, 1, 0 );
-    Vec3 VEC3_UNIT_Z  = Vec3( 0, 0, 1 );
+    Vec3 VEC3_ZERO      = Vec3( 0, 0, 0 );
+    Vec3 VEC3_UNIT_X    = Vec3( 1, 0, 0 );
+    Vec3 VEC3_UNIT_Y    = Vec3( 0, 1, 0 );
+    Vec3 VEC3_UNIT_Z    = Vec3( 0, 0, 1 );
+    Vec3 VEC3_IDENTITY  = Vec3( 1, 1, 1 );
 }
 
 /**
@@ -21,6 +22,8 @@ struct Vec3 {
         struct { float r, g, b; }
         float[3] v;
     }
+    
+    enum glsizeof = cast(void*) Vec3.sizeof;
 
     /* Operations */
 
@@ -64,8 +67,16 @@ struct Vec3 {
     /* Assignment Operations */
     
     /// Set each component of the vector to the given float
-    void opAssign()(float f) {
+    Vec3 opAssign()(float f) {
         x = y = z = f;
+        return this;
+    }
+    
+    Vec3 opAssign()(Vec3 v) {
+        x = v.x;
+        y = v.y;
+        z = v.z;
+        return this;
     }
 
     /// Add to vector: `this += v`
@@ -84,6 +95,7 @@ struct Vec3 {
 
     /* Other Methods */
     
+    /// Get the magnitute of the vector
     @property float magnitude() {
         return sqrt(x*x + y*y + z*z);
     }
@@ -109,46 +121,4 @@ struct Vec3 {
         z *= n;
     }
     
-}
-
-// Yeah, I have no idea how to write unittests. So I'm 
-// just printing things out at the moment... :P
-unittest {
-    
-    //import std.stdio;
-    
-    Vec3 v1 = Vec3( 1, 2,  3 );
-    Vec3 v2 = Vec3(-1, 2, -2 );
-    float f = 3.4;
-    
-    assert(-v2     == Vec3(1, -2, 2));
-    assert(v1 + v2 == Vec3(0, 4, 1));
-    assert(v1 - v2 == Vec3(2, 0, 5));
-    //assert(v1 * f  == Vec3(3.4, 6.8, 10.2));
-    assert(v1 * v2 == -3);
-
-    //// Test vector operations
-    //writeln("Test Vec3 Operations:");
-    //writeln;
-    //writeln("let v1 = ", v1);
-    //writeln("let v2 = ", v2);
-    //writeln("let f  = ", f);
-    //writeln;
-    //writeln("-v1          = ",   -v1);
-    //writeln("v1 + v2      = ",   v1 + v2);
-    //writeln("v1 - v2      = ",   v1 - v2);
-    //writeln("v1 * f       = ",   v1 * f);
-    //writeln("v1 * v2      = ",   v1 * v2);
-    //writeln;
-    //writeln("v1.normalize = ",     v1.normalize);
-    //writeln("v1.magnitude = ",     v1.magnitude);
-    //writeln("v1.cross(v2) = ",     v1.cross(v2));
-    //writeln;
-    
-    //v1.magnitude = 5;
-    //writeln("v1.magnitude = 5");
-    //writeln("v1 = ", v1);
-    //v1 = 0;
-    //writeln("v1 = 0");
-    //writeln("v1 = ", v1);
 }

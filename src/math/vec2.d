@@ -4,9 +4,10 @@ import std.math : sqrt;
 
 // Constants
 const {
-    Vec2 VEC2_ZERO    = Vec2( 0, 0 );
-    Vec2 VEC2_UNIT_X  = Vec2( 1, 0 );
-    Vec2 VEC2_UNIT_Y  = Vec2( 0, 1 );
+    Vec2 VEC2_ZERO      = Vec2( 0, 0 );
+    Vec2 VEC2_UNIT_X    = Vec2( 1, 0 );
+    Vec2 VEC2_UNIT_Y    = Vec2( 0, 1 );
+    Vec2 VEC2_IDENTITY  = Vec2( 1, 1 );
 }
 
 struct Vec2 {
