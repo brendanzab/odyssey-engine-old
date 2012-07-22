@@ -1,10 +1,10 @@
 module odyssey.render.shader;
 
 import odyssey.util.prettyout;
-
-import std.file, std.path, std.stdio, std.string;
+import odyssey.util.textfile;
 
 import derelict.opengl3.gl3;
+import std.stdio, std.string;
 
 class ShaderProgram {
     
@@ -89,20 +89,20 @@ class Shader {
     GLuint shader;
     alias shader this;
     
-    GLenum type;
+    TextFile shaderSource;
     
     this(string path) {
-        type = path.shaderType;
+        shaderSource = TextFile(path);
         load(path);
     }
     
     void load(string path) {
-        writefln("Creating %s from %s", type.shaderTypeString, path);
+        writefln("Creating %s from %s", shaderSource.typeString, path);
         
-        shader = glCreateShader(type);
+        shader = glCreateShader(shaderSource.shaderType);
         
         // Read the shader from the file
-        const char* data = path.readText.toStringz;
+        const char* data = shaderSource.dataz;
         shader.glShaderSource(1, &data, null);
         
         shader.glCompileShader();
@@ -110,6 +110,7 @@ class Shader {
     }
     
     void unload() {
+        writefln("Deleting %s", shaderSource.typeString);
         shader.glDeleteShader();
     }
     
@@ -120,6 +121,7 @@ private:
         GLint succeeded;
         shader.glGetShaderiv(GL_COMPILE_STATUS, &succeeded);
         
+        // Print log if the compilation failed
         if (!succeeded) {
             // Get log-length
             GLint len;
@@ -134,24 +136,27 @@ private:
 }
 
 /// Returns the shader type based on the file extension
-pure GLenum shaderType(string filename) {
-    switch(filename.extension) {
+GLenum shaderType(ref TextFile file) {
+    switch(file.extension) {
         case ".vert":
+        case ".vs":
             return GL_VERTEX_SHADER;
         case ".frag":
+        case ".fs":
             return GL_FRAGMENT_SHADER;
         case ".geom":
+        case ".gs":
             return GL_GEOMETRY_SHADER;
         case "":
-            throw new Exception("The shader file does not have an extension. Must be .vert, .frag or .geom");
+            throw new Exception("The shader file does not have an extension.");
         default:
-            string error = "'" ~ extension(filename) ~ "'%s' not supported. Must be .vert, .frag or .geom";
-            throw new Exception(error);
+            throw new Exception("'" ~ file.extension ~ "' not supported.");
     }
 }
 
-pure string shaderTypeString(GLenum type) {
-    switch (type) {
+/// Returns the type of the shader file as a string
+string typeString(ref TextFile file) {
+    switch (file.shaderType) {
         case GL_VERTEX_SHADER:      return "vertex shader";
         case GL_FRAGMENT_SHADER:    return "fragment shader";
         case GL_GEOMETRY_SHADER:    return "geometry shader";
