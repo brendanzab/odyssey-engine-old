@@ -1,7 +1,7 @@
 module odyssey.geom.buffer;
 
 import odyssey.geom.vertex;
-import odyssey.util.gl;
+import odyssey.util.gl3;
 
 import std.stdio;
 

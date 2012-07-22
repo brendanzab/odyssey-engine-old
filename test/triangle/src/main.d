@@ -6,7 +6,7 @@ import odyssey.render.shader;
 import odyssey.math.mat4;
 import odyssey.math.vec3;
 import odyssey.math.vec4;
-import odyssey.util.gl;
+import odyssey.util.gl3;
 import odyssey.util.glfw3;
 
 import std.stdio, std.string;

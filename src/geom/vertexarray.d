@@ -1,6 +1,5 @@
 module odyssey.geom.vertexarray;
 
-import odyssey.util.gl;
 import odyssey.geom.buffer;
 import odyssey.math.vec3;
 import odyssey.render.shader;
