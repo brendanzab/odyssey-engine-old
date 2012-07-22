@@ -1,13 +1,10 @@
 module odyssey.core.application;
 
-import odyssey.util.gldebug;
-import odyssey.util.glfwdebug;
+import odyssey.util.gl3;
+import odyssey.util.glfw3;
 import odyssey.util.prettyout;
 
 import std.conv, std.stdio, std.string;
-import derelict.glfw3.glfw3;
-import derelict.opengl3.gl3;
-
 
 abstract class Application {
     

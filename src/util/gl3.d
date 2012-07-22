@@ -1,14 +1,15 @@
-module odyssey.util.gldebug;
+module odyssey.util.gl3;
 
 import odyssey.util.prettyout;
-
 import std.stdio, std.conv;
-import derelict.opengl3.gl3;
 
-void writeGLError() {
+public import derelict.opengl3.gl3;
+
+void writeGLError(string file = __FILE__, int line = __LINE__) {
     GLenum glError = glGetError();
     if (glError != GL_NO_ERROR) {
-        writeln(errorString("OpenGL Error: "), glErrorString(glError));
+        writefln("%s %s in %s + %d", errorString("OpenGL Error:"),
+            glErrorString(glError), file, line);
         
         // abit of a hack - prints the stack trace.
         try 

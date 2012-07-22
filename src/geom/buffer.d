@@ -1,9 +1,9 @@
 module odyssey.geom.buffer;
 
+import odyssey.geom.vertex;
+import odyssey.util.gl;
 
-import odyssey.util.gldebug;
 import std.stdio;
-import derelict.opengl3.gl3;
 
 class Buffer {
     GLuint buffer;

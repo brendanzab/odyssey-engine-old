@@ -6,11 +6,10 @@ import odyssey.render.shader;
 import odyssey.math.mat4;
 import odyssey.math.vec3;
 import odyssey.math.vec4;
-import odyssey.util.gldebug;
+import odyssey.util.gl;
+import odyssey.util.glfw3;
 
 import std.stdio, std.string;
-import derelict.glfw3.glfw3;
-import derelict.opengl3.gl3;
 
 void main() {
     auto game = new Game();

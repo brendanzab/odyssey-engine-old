@@ -1,9 +1,10 @@
 module odyssey.render.shader;
 
+import odyssey.math.mat4;
 import odyssey.util.prettyout;
+import odyssey.util.gl;
 import odyssey.util.textfile;
 
-import derelict.opengl3.gl3;
 import std.stdio, std.string;
 
 class ShaderProgram {

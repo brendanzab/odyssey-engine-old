@@ -1,11 +1,10 @@
 module odyssey.geom.vertexarray;
 
-import odyssey.util.gldebug;
+import odyssey.util.gl;
 import odyssey.geom.buffer;
 import odyssey.math.vec3;
 import odyssey.render.shader;
 
-import derelict.opengl3.gl3;
 
 interface Bindable {
     void bind();

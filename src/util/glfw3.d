@@ -1,9 +1,9 @@
-module odyssey.util.glfwdebug;
+module odyssey.util.glfw3;
 
 import odyssey.util.prettyout;
-
 import std.stdio, std.conv, std.string;
-import derelict.glfw3.glfw3;
+
+public import derelict.glfw3.glfw3;
 
 void writeGLFWInfo() {
     if (!DerelictGLFW3.isLoaded()) {
