@@ -146,22 +146,23 @@ public final:
 
 struct Timer {
     private double oldTime;
-    private double newTime;
+    private double currentTime;
     
     /// update and return the delta time in seconds 
     double update() {
-        oldTime = newTime;
-        newTime = glfwGetTime();
+        oldTime = currentTime;
+        currentTime = glfwGetTime();
         
         return delta();
     }
     
+    /// return the delta time as of the last call of `update()`
     double delta() {
-        return newTime - oldTime;
+        return currentTime - oldTime;
     }
     
-    /// return the time as of the 
+    /// return the time as of the last call of `update()`
     double time() {
-        return newTime;
+        return currentTime;
     }
 }
