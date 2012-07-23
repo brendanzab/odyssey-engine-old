@@ -5,7 +5,7 @@ import odyssey.util.prettyout;
 import odyssey.util.gl3;
 import odyssey.util.textfile;
 
-import std.stdio, std.string;
+import std.stdio, std.string, std.conv;
 
 class ShaderProgram {
     
@@ -79,7 +79,7 @@ private:
             // Get info log and throw exception
             char[] log = new char[len];
             program.glGetProgramInfoLog(len, null, cast(char*)log);
-            throw new Exception(format("%s %s", "Program Linker failure:".errorString, log));
+            throw new OpenGLException("Program Linker failure:", log.to!string);
         }
     }
     
@@ -131,7 +131,7 @@ private:
             // Get info log and throw exception
             char[] log = new char[len];
             shader.glGetShaderInfoLog(len, null, cast(char*)log);
-            throw new Exception(format("%s %s", "GLSL Compile failure:".errorString, log));
+            throw new OpenGLException("GLSL Compile failure:", log.to!string);
         }
     }
 }
@@ -161,6 +161,6 @@ string typeString(ref TextFile file) {
         case GL_VERTEX_SHADER:      return "vertex shader";
         case GL_FRAGMENT_SHADER:    return "fragment shader";
         case GL_GEOMETRY_SHADER:    return "geometry shader";
-        default: throw new Exception("Invalid shader type");
+        default: throw new OpenGLException("Invalid shader type");
     }
 }

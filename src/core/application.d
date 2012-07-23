@@ -2,7 +2,6 @@ module odyssey.core.application;
 
 import odyssey.util.gl3;
 import odyssey.util.glfw3;
-import odyssey.util.prettyout;
 
 import std.conv, std.stdio, std.string;
 
@@ -74,7 +73,7 @@ public final:
         DerelictGLFW3.load();
         if(!glfwInit()) {
             writeGLFWErrors();
-            throw new Exception(errorString("Failed to create glcontext"));
+            throw new OpenGLException("Failed to create glcontext");
         }
         
         // Log hardware and version info
@@ -91,7 +90,7 @@ public final:
         window = glfwOpenWindow(width, height, GLFW_WINDOWED, name.ptr, null);
         if(!window) {
             writeGLFWErrors();
-            throw new Exception(errorString("Failed to create window"));
+            throw new GLFWException("Failed to create window");
         }
 
         // Enable vertical sync (on cards that support it)

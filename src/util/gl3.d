@@ -5,6 +5,12 @@ import std.stdio, std.conv;
 
 public import derelict.opengl3.gl3;
 
+class OpenGLException : Exception {
+    this(string message1 = "", string message2 = "") {
+        super(errorString(message1) ~ message2);
+    }
+}
+
 void writeGLError(string file = __FILE__, int line = __LINE__) {
     GLenum glError = glGetError();
     if (glError != GL_NO_ERROR) {
@@ -13,7 +19,7 @@ void writeGLError(string file = __FILE__, int line = __LINE__) {
         
         // abit of a hack - prints the stack trace.
         try 
-            throw new Exception("OpenGL Error");
+            throw new OpenGLException();
         catch (Exception e)
             writeln(e.info);
     }

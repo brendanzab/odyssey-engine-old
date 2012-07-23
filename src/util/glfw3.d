@@ -5,6 +5,12 @@ import std.stdio, std.conv, std.string;
 
 public import derelict.glfw3.glfw3;
 
+class GLFWException : Exception {
+    this(string message1 = "", string message2 = "") {
+        super(errorString(message1) ~ message2);
+    }
+}
+
 void writeGLFWInfo() {
     if (!DerelictGLFW3.isLoaded()) {
         writefln(errorString("DerelictSDL2 is not loaded!"));
