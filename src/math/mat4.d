@@ -11,6 +11,8 @@ const {
               0, 0, 0, 1 );
 }
 
+// TODO: Unittests
+
 struct Mat4 {
     union {
         struct {
@@ -20,6 +22,7 @@ struct Mat4 {
                 m20, m21, m22, m23,
                 m30, m31, m32, m33;
         };
+        float[16] m16;
         float[4][4] m;
     };
     
@@ -47,6 +50,8 @@ struct Mat4 {
         this.col!3 = col3;
     }
     
+    @property auto ptr() { return m16.ptr; }
+    
     /**
      *  Set row
      *      eg. m.row!3 = v
@@ -59,7 +64,7 @@ struct Mat4 {
     }
     
     /**
-     *  Get row as a Vec3
+     *  Get row as a Vec4
      *      eg. m.row!1
      */
     @property Vec4 row(int i)() {
@@ -81,7 +86,7 @@ struct Mat4 {
     }
     
     /**
-     *  Get cloumn as a Vec3
+     *  Get cloumn as a Vec4
      *      eg. m.col!1
      */
     @property Vec4 col(int i)()  {
@@ -90,6 +95,74 @@ struct Mat4 {
                     m[2][i],
                     m[3][i]);
     }
+    
+    /**
+     *  Transpose the matrix
+     */
+    Mat4 transpose() {
+        return Mat4(
+            m00, m10, m20, m30,
+            m01, m11, m21, m31,
+            m02, m12, m22, m32,
+            m03, m13, m23, m33);
+    }
+    
+    /**
+     *  The sum of the matrix and another matrix
+     */
+    Mat4 opBinary(string op : "+")(Mat4 m) {
+        return Mat4(
+            this.col!0 + m.col!0,
+            this.col!1 + m.col!1,
+            this.col!2 + m.col!2,
+            this.col!3 + m.col!3);
+    }
+    
+    /**
+     *  Subtract the matrix by another matrix
+     */
+    Mat4 opBinary(string op : "-")(Mat4 m) {
+        return Mat4(
+            this.col!0 - m.col!0,
+            this.col!1 - m.col!1,
+            this.col!2 - m.col!2,
+            this.col!3 - m.col!3);
+    }
+    
+    /**
+     *  Multiply the matrix by a float
+     */
+    Mat4 opBinary(string op : "*")(float f) {
+        return Mat4(
+            this.col!0 * f,
+            this.col!1 * f,
+            this.col!2 * f,
+            this.col!3 * f);
+    }
+    
+    /**
+     *  Multiply the matrix by a 4-component vector
+     */
+    Vec4 opBinary(string op : "*")(Vec4 v) {
+        return Vec4 (
+            this.row!0 * v,
+            this.row!1 * v,
+            this.row!2 * v,
+            this.row!3 * v);
+    }
+    
+    /**
+     *  Multiply the matrix by another 4x4 matrix
+     */
+    Mat4 opBinary(string op : "*")(Mat4 m) {
+        return Mat4(
+            (this.row!0 * m.col!0), (this.row!0 * m.col!1), (this.row!0 * m.col!2), (this.row!0 * m.col!3),
+            (this.row!1 * m.col!0), (this.row!1 * m.col!1), (this.row!1 * m.col!2), (this.row!1 * m.col!3),
+            (this.row!2 * m.col!0), (this.row!2 * m.col!1), (this.row!2 * m.col!2), (this.row!2 * m.col!3),
+            (this.row!3 * m.col!0), (this.row!3 * m.col!1), (this.row!3 * m.col!2), (this.row!3 * m.col!3));
+    }
+    
+    // TODO: Matrix Inversion
     
     string toString() {
         return 
@@ -101,17 +174,27 @@ struct Mat4 {
     
 }
 
-
-Mat4 perspective(float fov, float aspectRatio, float near, float far) {
-    return Mat4(1);
+Mat4 perspective(float fov, float aspect, float near, float far) {
+    
+    // TODO!
+    
+    //float range = tan
+    throw new Exception("Not yet implemented");
 }
 
 Mat4 translate(Mat4 m, Vec4 v) {
     Mat4 result = m;
+    result.col!3 = (m.col!0 * v.v[0]) +
+                   (m.col!1 * v.v[1]) + 
+                   (m.col!2 * v.v[2]) + m.col!3;
     return result;
 }
 
 Mat4 scale(Mat4 m, Vec4 v) {
-    Mat4 result = m;
+    Mat4 result;
+    result.col!0 = m.col!0 * v.v[0];
+    result.col!1 = m.col!1 * v.v[1];
+    result.col!2 = m.col!2 * v.v[2];
+    result.col!3 = m.col!3;
     return result;
 }
