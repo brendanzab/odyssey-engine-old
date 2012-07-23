@@ -137,7 +137,7 @@ private:
 }
 
 /// Returns the shader type based on the file extension
-GLenum shaderType(ref TextFile file) {
+pure GLenum shaderType(ref TextFile file) {
     switch(file.extension) {
         case ".vert":
         case ".vs":
@@ -156,7 +156,7 @@ GLenum shaderType(ref TextFile file) {
 }
 
 /// Returns the type of the shader file as a string
-string typeString(ref TextFile file) {
+pure string typeString(ref TextFile file) {
     switch (file.shaderType) {
         case GL_VERTEX_SHADER:      return "vertex shader";
         case GL_FRAGMENT_SHADER:    return "fragment shader";
