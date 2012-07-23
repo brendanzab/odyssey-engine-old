@@ -29,30 +29,25 @@ void writeGLFWInfo() {
     // Print GLFW info
     writefln(headingString("GLFW"));
     writefln("Version:  %s", to!string(glfwGetVersionString()));
-    writefln("Desktop mode: %s", getModeString(dtmode));
+    writefln("Desktop mode: %s", dtmode.toString);
     writefln("Available modes: %d", modecount);
     foreach (int i; 0..modecount) {
-        writefln(" %3d - %s", i, getModeString(modes[i]));
+        writefln(" %3d - %s", i, modes[i].toString);
     }
     writeln();
 }
 
 void writeGLFWErrors()() {
     int errorID = glfwGetError();
-    while (errorID != GLFW_NO_ERROR)
-    {
+    while (errorID != GLFW_NO_ERROR) {
         writeln(errorString("GLFW Error: "), to!string(glfwErrorString(errorID)));
         errorID = glfwGetError();
     }
 }
 
-private {
-    
-    string getModeString(GLFWvidmode mode) {
-        return format(
-            "%d x %d, %d bits",
-            mode.width, mode.height,
-            mode.redBits + mode.greenBits + mode.blueBits);
-    }
-
+string toString(GLFWvidmode mode) {
+    return format(
+        "%d x %d, %d bits",
+        mode.width, mode.height,
+        mode.redBits + mode.greenBits + mode.blueBits);
 }
