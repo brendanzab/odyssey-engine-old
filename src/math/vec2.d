@@ -1,6 +1,6 @@
 module odyssey.math.vec2;
 
-import std.math : sqrt;
+import std.math : abs, sqrt;
 
 // Constants
 const {
@@ -42,6 +42,11 @@ struct Vec2 {
         return Vec2(x*f, y*f);
     }
     
+    /// Returns the vector divided by a float: `this / f`
+    Vec2 opBinary(string op : "/")(float f) {
+        return Vec2(x/f, y/f);
+    }
+    
     /* Assignment Operations */
     
     /// Set each component of the vector to the given float
@@ -56,9 +61,21 @@ struct Vec2 {
     }
 
     /// Subtract from vector: `this -= v`
-    void opAssign(string op : "*")(Vec2 v) {
+    void opAssign(string op : "-")(Vec2 v) {
         x -= v.x;
         y -= v.y;
+    }
+
+    /// Multiply vector: `this *= f`
+    void opAssign(string op : "*")(float f) {
+        x *= f;
+        y *= f;
+    }
+
+    /// Divide vector: `this /= f`
+    void opAssign(string op : "/")(float f) {
+        x /= f;
+        y /= f;
     }
     
     /* Other Methods */
@@ -76,7 +93,7 @@ struct Vec2 {
     }
 
     /// Returns the normalized vector
-    Vec2 normalize() {
+    @property Vec2 normalized() {
         float n = 1 / magnitude;
         return this * n;
     }
@@ -87,4 +104,20 @@ struct Vec2 {
         y *= n;
     }
     
+}
+
+Vec2 abs(Vec2 v) {
+    return Vec2(abs(v.x), abs(v.y));
+}
+
+/// Returns the minimum coordinates in one vector
+Vec2 min(Vec2 a, Vec2 b) {
+    return Vec2(min(a.x, b.x),
+                min(a.y, b.y));
+}
+
+/// Returns the minimum coordinates in one vector
+Vec2 max(Vec2 a, Vec2 b) {
+    return Vec2(max(a.x, b.x),
+                max(a.y, b.y));
 }

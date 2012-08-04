@@ -1,6 +1,6 @@
 module odyssey.math.vec4;
 
-import std.math;
+import std.math : abs, min, max, sqrt;
 import std.string;
 
 struct Vec4 {
@@ -44,6 +44,11 @@ struct Vec4 {
     float opBinary(string op : "*")(Vec4 v) {
         return (x * v.x) + (y * v.y) + (z * v.z) + (w * v.w);
     }
+    
+    /// Returns the vector divided by a float: `this / f`
+    Vec4 opBinary(string op : "/")(float f) {
+        return Vec4(x/f, y/f, z/f, w/f);
+    }
 
     /* Assignment Operations */
     
@@ -61,20 +66,27 @@ struct Vec4 {
     }
 
     /// Subtract from vector: `this -= v`
-    void opAssign(string op : "*")(Vec3 v) {
+    void opAssign(string op : "-")(Vec3 v) {
         x -= v.x;
         y -= v.y;
         z -= v.z;
         w -= v.w;
     }
 
-    /// Divide vector: `this /= f`
-    void opAssign(string op : "/")(float f) {
-        f = 1/f;
+    /// Multiply vector: `this *= f`
+    void opAssign(string op : "*")(float f) {
         x *= f;
         y *= f;
         z *= f;
         w *= f;
+    }
+
+    /// Divide vector: `this /= f`
+    void opAssign(string op : "/")(float f) {
+        x /= f;
+        y /= f;
+        z /= f;
+        w /= f;
     }
 
     /* Other Methods */
@@ -93,7 +105,7 @@ struct Vec4 {
     }
 
     /// Returns the normalized vector
-    Vec4 normalize() {
+    @property Vec4 normalized() {
         float n = 1 / magnitude;
         return this * n;
     }
@@ -107,3 +119,24 @@ struct Vec4 {
     }
     
 }
+
+Vec4 abs(Vec4 v) {
+    return Vec4(abs(v.x), abs(v.y), abs(v.z), abs(v.w));
+}
+
+/// Returns the minimum coordinates in one vector
+Vec4 min(Vec4 a, Vec4 b) {
+    return Vec4(min(a.x, b.x),
+                min(a.y, b.y),
+                min(a.z, b.z),
+                min(a.w, b.w));
+}
+
+/// Returns the minimum coordinates in one vector
+Vec4 max(Vec4 a, Vec4 b) {
+    return Vec4(max(a.x, b.x),
+                max(a.y, b.y),
+                max(a.z, b.z),
+                max(a.w, b.w));
+}
+

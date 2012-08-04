@@ -1,6 +1,6 @@
 module odyssey.math.vec3;
 
-import std.math : sqrt;
+import std.math : abs, min, max, sqrt;
 
 // Constants
 const {
@@ -56,6 +56,11 @@ struct Vec3 {
         return (x * v.x) + (y * v.y) + (z * v.z);
     }
     
+    /// Returns the vector divided by a float: `this / f`
+    Vec3 opBinary(string op : "/")(float f) {
+        return Vec3(x/f, y/f, z/f);
+    }
+    
     /// Returns the cross product
     Vec3 cross(Vec3 v) {
         return Vec3(
@@ -87,10 +92,24 @@ struct Vec3 {
     }
 
     /// Subtract from vector: `this -= v`
-    void opAssign(string op : "*")(Vec3 v) {
+    void opAssign(string op : "-")(Vec3 v) {
         x -= v.x;
         y -= v.y;
         z -= v.z;
+    }
+
+    /// Multiply vector: `this *= f`
+    void opAssign(string op : "*")(float f) {
+        x *= f;
+        y *= f;
+        z *= f;
+    }
+
+    /// Divide vector: `this /= f`
+    void opAssign(string op : "/")(float f) {
+        x /= f;
+        y /= f;
+        z /= f;
     }
 
     /* Other Methods */
@@ -109,7 +128,7 @@ struct Vec3 {
     }
 
     /// Returns the normalized vector
-    Vec3 normalize() {
+    @property Vec3 normalized() {
         float n = 1 / magnitude;
         return this * n;
     }
@@ -121,4 +140,22 @@ struct Vec3 {
         z *= n;
     }
     
+}
+
+Vec3 abs(Vec3 v) {
+    return Vec3(abs(v.x), abs(v.y), abs(v.z));
+}
+
+/// Returns the minimum coordinates in one vector
+Vec3 min(Vec3 a, Vec3 b) {
+    return Vec3(min(a.x, b.x),
+                min(a.y, b.y),
+                min(a.z, b.z));
+}
+
+/// Returns the minimum coordinates in one vector
+Vec3 max(Vec3 a, Vec3 b) {
+    return Vec3(max(a.x, b.x),
+                max(a.y, b.y),
+                max(a.z, b.z));
 }
