@@ -24,12 +24,12 @@ struct Vec4 {
     /* Operations */
 
     /// Returns the negated vector: `-this`
-    Vec4 opUnary(string op : "-")() {
+    pure Vec4 opUnary(string op : "-")() {
         return Vec4(-x, -y, -z, -w);
     }
 
     /// Returns the sum of the vectors: `this + v`
-    Vec4 opBinary(string op : "+")(Vec4 v) {
+    pure Vec4 opBinary(string op : "+")(Vec4 v) {
         return Vec4(x + v.x,
                     y + v.y,
                     z + v.z,
@@ -37,7 +37,7 @@ struct Vec4 {
     }
 
     /// Returns the difference between the vectors: `this - v`
-    Vec4 opBinary(string op : "-")(Vec4 v) {
+    pure Vec4 opBinary(string op : "-")(Vec4 v) {
         return Vec4(x - v.x,
                     y - v.y,
                     z - v.z,
@@ -45,17 +45,17 @@ struct Vec4 {
     }
     
     /// Returns the vector multiplied by a float: `this * f`
-    Vec4 opBinary(string op : "*")(float f) {
+    pure Vec4 opBinary(string op : "*")(float f) {
         return Vec4(x*f, y*f, z*f, w*f);
     }
 
     /// Returns the dot product: `this * v `
-    float opBinary(string op : "*")(Vec4 v) {
+    pure float opBinary(string op : "*")(Vec4 v) {
         return (x * v.x) + (y * v.y) + (z * v.z) + (w * v.w);
     }
     
     /// Returns the vector divided by a float: `this / f`
-    Vec4 opBinary(string op : "/")(float f) {
+    pure Vec4 opBinary(string op : "/")(float f) {
         return Vec4(x/f, y/f, z/f, w/f);
     }
 
@@ -105,7 +105,7 @@ struct Vec4 {
 
     /* Other Methods */
     
-    @property float magnitude() {
+    pure @property float magnitude() {
         return sqrt(x*x + y*y + z*z + w*w);
     }
     
@@ -119,7 +119,7 @@ struct Vec4 {
     }
 
     /// Returns the normalized vector
-    @property Vec4 normalized() {
+    pure @property Vec4 normalized() {
         float n = 1 / magnitude;
         return this * n;
     }
@@ -134,7 +134,8 @@ struct Vec4 {
     
 }
 
-Vec4 abs(Vec4 v) {
+// Set each component of the vector to an absolute value
+pure Vec4 abs(Vec4 v) {
     return Vec4(fabs(v.x),
                 fabs(v.y),
                 fabs(v.z),
@@ -142,7 +143,7 @@ Vec4 abs(Vec4 v) {
 }
 
 /// Returns the minimum coordinates in one vector
-Vec4 min(Vec4 a, Vec4 b) {
+pure Vec4 min(Vec4 a, Vec4 b) {
     return Vec4(fmin(a.x, b.x),
                 fmin(a.y, b.y),
                 fmin(a.z, b.z),
@@ -150,7 +151,7 @@ Vec4 min(Vec4 a, Vec4 b) {
 }
 
 /// Returns the minimum coordinates in one vector
-Vec4 max(Vec4 a, Vec4 b) {
+pure Vec4 max(Vec4 a, Vec4 b) {
     return Vec4(fmax(a.x, b.x),
                 fmax(a.y, b.y),
                 fmax(a.z, b.z),

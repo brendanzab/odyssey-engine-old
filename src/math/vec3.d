@@ -28,41 +28,41 @@ struct Vec3 {
     /* Operations */
 
     /// Returns the negated vector: `-this`
-    Vec3 opUnary(string op : "-")() {
+    pure Vec3 opUnary(string op : "-")() {
         return Vec3(-x, -y, -z);
     }
 
     /// Returns the sum of the vectors: `this + v`
-    Vec3 opBinary(string op : "+")(Vec3 v) {
+    pure Vec3 opBinary(string op : "+")(Vec3 v) {
         return Vec3(x + v.x,
                     y + v.y,
                     z + v.z);
     }
 
     /// Returns the difference between the vectors: `this - v`
-    Vec3 opBinary(string op : "-")(Vec3 v) {
+    pure Vec3 opBinary(string op : "-")(Vec3 v) {
         return Vec3(x - v.x,
                     y - v.y,
                     z - v.z);
     }
     
     /// Returns the vector multiplied by a float: `this * f`
-    Vec3 opBinary(string op : "*")(float f) {
+    pure Vec3 opBinary(string op : "*")(float f) {
         return Vec3(x*f, y*f, z*f);
     }
 
     /// Returns the dot product: `this * v `
-    float opBinary(string op : "*")(Vec3 v) {
+    pure float opBinary(string op : "*")(Vec3 v) {
         return (x * v.x) + (y * v.y) + (z * v.z);
     }
     
     /// Returns the vector divided by a float: `this / f`
-    Vec3 opBinary(string op : "/")(float f) {
+    pure Vec3 opBinary(string op : "/")(float f) {
         return Vec3(x/f, y/f, z/f);
     }
     
     /// Returns the cross product
-    Vec3 cross(Vec3 v) {
+    pure Vec3 cross(Vec3 v) {
         return Vec3(
             y*v.z - z*v.y,
             z*v.x - x*v.z,
@@ -120,7 +120,7 @@ struct Vec3 {
     /* Other Methods */
     
     /// Get the magnitute of the vector
-    @property float magnitude() {
+    pure @property float magnitude() {
         return sqrt(x*x + y*y + z*z);
     }
     
@@ -133,7 +133,7 @@ struct Vec3 {
     }
 
     /// Returns the normalized vector
-    @property Vec3 normalized() {
+    pure @property Vec3 normalized() {
         float n = 1 / magnitude;
         return this * n;
     }
@@ -147,21 +147,22 @@ struct Vec3 {
     
 }
 
-Vec3 abs(Vec3 v) {
+// Set each component of the vector to an absolute value
+pure Vec3 abs(Vec3 v) {
     return Vec3(fabs(v.x),
                 fabs(v.y),
                 fabs(v.z));
 }
 
 /// Returns the minimum coordinates in one vector
-Vec3 min(Vec3 a, Vec3 b) {
+pure Vec3 min(Vec3 a, Vec3 b) {
     return Vec3(fmin(a.x, b.x),
                 fmin(a.y, b.y),
                 fmin(a.z, b.z));
 }
 
 /// Returns the minimum coordinates in one vector
-Vec3 max(Vec3 a, Vec3 b) {
+pure Vec3 max(Vec3 a, Vec3 b) {
     return Vec3(fmax(a.x, b.x),
                 fmax(a.y, b.y),
                 fmax(a.z, b.z));

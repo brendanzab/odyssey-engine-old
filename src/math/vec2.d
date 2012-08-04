@@ -21,29 +21,29 @@ struct Vec2 {
     /* Operations */
     
     /// Returns the negated vector: `-this`
-    Vec2 opUnary(string op : "-")() {
+    pure Vec2 opUnary(string op : "-")() {
         return Vec2(-x, -y);
     }
 
     /// Returns the sum of the vectors: `this + v`
-    Vec2 opBinary(string op : "+")(Vec2 v) {
+    pure Vec2 opBinary(string op : "+")(Vec2 v) {
         return Vec2(x + v.x,
                     y + v.y);
     }
 
     /// Returns the difference between the vectors: `this - v`
-    Vec2 opBinary(string op : "-")(Vec2 v) {
+    pure Vec2 opBinary(string op : "-")(Vec2 v) {
         return Vec2(x - v.x,
                     y - v.y);
     }
     
     /// Returns the vector multiplied by a float: `this * f`
-    Vec2 opBinary(string op : "*")(float f) {
+    pure Vec2 opBinary(string op : "*")(float f) {
         return Vec2(x*f, y*f);
     }
     
     /// Returns the vector divided by a float: `this / f`
-    Vec2 opBinary(string op : "/")(float f) {
+    pure Vec2 opBinary(string op : "/")(float f) {
         return Vec2(x/f, y/f);
     }
     
@@ -86,7 +86,7 @@ struct Vec2 {
     /* Other Methods */
     
     /// Get the magnitute of the vector
-    @property float magnitude() {
+    pure @property float magnitude() {
         return sqrt(x*x + y*y);
     }
     
@@ -98,7 +98,7 @@ struct Vec2 {
     }
 
     /// Returns the normalized vector
-    @property Vec2 normalized() {
+    pure @property Vec2 normalized() {
         float n = 1 / magnitude;
         return this * n;
     }
@@ -111,19 +111,20 @@ struct Vec2 {
     
 }
 
-Vec2 abs(Vec2 v) {
+// Set each component of the vector to an absolute value
+pure Vec2 abs(Vec2 v) {
     return Vec2(fabs(v.x),
                 fabs(v.y));
 }
 
 /// Returns the minimum coordinates in one vector
-Vec2 min(Vec2 a, Vec2 b) {
+pure Vec2 min(Vec2 a, Vec2 b) {
     return Vec2(fmin(a.x, b.x),
                 fmin(a.y, b.y));
 }
 
 /// Returns the minimum coordinates in one vector
-Vec2 max(Vec2 a, Vec2 b) {
+pure Vec2 max(Vec2 a, Vec2 b) {
     return Vec2(fmax(a.x, b.x),
                 fmax(a.y, b.y));
 }

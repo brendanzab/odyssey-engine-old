@@ -21,19 +21,19 @@ struct AABB {
         setBounds(minX, minY, minZ, maxX, maxY, maxZ);
     }
     
-    @property float width () { return size.x; }
-    @property float height() { return size.y; }
-    @property float depth () { return size.z; }
-    @property void  width (float f)  { size.x = f; }
-    @property void  height(float f)  { size.x = f; }
-    @property void  depth (float f)  { size.x = f; }
+    pure @property float width () { return size.x; }
+    pure @property float height() { return size.y; }
+    pure @property float depth () { return size.z; }
+    @property void width (float f) { size.x = f; }
+    @property void height(float f) { size.x = f; }
+    @property void depth (float f) { size.x = f; }
     
-    @property float minX() { return center.x - fabs(size.x)/2; }
-    @property float minY() { return center.y - fabs(size.y)/2; }
-    @property float minZ() { return center.z - fabs(size.z)/2; }
-    @property float maxX() { return center.x + fabs(size.x)/2; }
-    @property float maxY() { return center.y + fabs(size.y)/2; }
-    @property float maxZ() { return center.z + fabs(size.z)/2; }
+    pure @property float minX() { return center.x - fabs(size.x)/2; }
+    pure @property float minY() { return center.y - fabs(size.y)/2; }
+    pure @property float minZ() { return center.z - fabs(size.z)/2; }
+    pure @property float maxX() { return center.x + fabs(size.x)/2; }
+    pure @property float maxY() { return center.y + fabs(size.y)/2; }
+    pure @property float maxZ() { return center.z + fabs(size.z)/2; }
     
     void setBounds(float minX, float minY, float minZ,
                    float maxX, float maxY, float maxZ) {
@@ -45,13 +45,13 @@ struct AABB {
         size = abs(size);
     }
     
-    bool contains(Vec3 v) {
+    pure bool contains(Vec3 v) {
         return v.x > this.minX && v.x < this.maxX &&
                v.y > this.minY && v.y < this.maxY &&
                v.z > this.minZ && v.z < this.maxZ;
     }
     
-    bool contains(AABB other) {
+    pure bool contains(AABB other) {
         return other.minX > this.minX && other.maxX < this.maxX &&
                other.minY > this.minY && other.maxY < this.maxY &&
                other.minZ > this.minZ && other.maxZ < this.maxZ;
