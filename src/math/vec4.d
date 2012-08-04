@@ -1,16 +1,15 @@
 module odyssey.math.vec4;
 
 import std.math : fabs, fmin, fmax, sqrt;
-import std.string;
 
 // Constants
 const {
-    Vec4 VEC4_ZERO      = Vec4( 0, 0, 0, 0 );
-    Vec4 VEC4_UNIT_X    = Vec4( 1, 0, 0, 0 );
-    Vec4 VEC4_UNIT_Y    = Vec4( 0, 1, 0, 0 );
-    Vec4 VEC4_UNIT_Z    = Vec4( 0, 0, 1, 0 );
-    Vec4 VEC4_UNIT_W    = Vec4( 0, 0, 0, 1 );
-    Vec4 VEC4_IDENTITY  = Vec4( 1, 1, 1, 1 );
+    Vec4 VEC4_ZERO      = { 0, 0, 0, 0 };
+    Vec4 VEC4_UNIT_X    = { 1, 0, 0, 0 };
+    Vec4 VEC4_UNIT_Y    = { 0, 1, 0, 0 };
+    Vec4 VEC4_UNIT_Z    = { 0, 0, 1, 0 };
+    Vec4 VEC4_UNIT_W    = { 0, 0, 0, 1 };
+    Vec4 VEC4_IDENTITY  = { 1, 1, 1, 1 };
 }
 
 struct Vec4 {

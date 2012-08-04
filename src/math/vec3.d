@@ -4,11 +4,11 @@ import std.math : fabs, fmin, fmax, sqrt;
 
 // Constants
 const {
-    Vec3 VEC3_ZERO      = Vec3( 0, 0, 0 );
-    Vec3 VEC3_UNIT_X    = Vec3( 1, 0, 0 );
-    Vec3 VEC3_UNIT_Y    = Vec3( 0, 1, 0 );
-    Vec3 VEC3_UNIT_Z    = Vec3( 0, 0, 1 );
-    Vec3 VEC3_IDENTITY  = Vec3( 1, 1, 1 );
+    Vec3 VEC3_ZERO      = { 0, 0, 0 };
+    Vec3 VEC3_UNIT_X    = { 1, 0, 0 };
+    Vec3 VEC3_UNIT_Y    = { 0, 1, 0 };
+    Vec3 VEC3_UNIT_Z    = { 0, 0, 1 };
+    Vec3 VEC3_IDENTITY  = { 1, 1, 1 };
 }
 
 /**
