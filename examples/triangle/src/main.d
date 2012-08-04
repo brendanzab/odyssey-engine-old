@@ -18,22 +18,31 @@ void main() {
 
 class Game : Application {
     
-    // 4D positions of the verticies
+    // 4D positions of the vertices
     Vec3 vertices[] = [
         Vec3( 0.75,  0.75,  0.0 ),
         Vec3( 0.75, -0.75,  0.0 ),
         Vec3(-0.75, -0.75,  0.0 )
     ];
     
+    Vec3 normals[] = [
+        VEC3_IDENTITY,
+        VEC3_IDENTITY,
+        VEC3_IDENTITY
+    ];
+    
+    uint indices[] = [ 0, 1, 2 ];
+    
     // The handle for the shader program
     ShaderProgram shader;
     VertexArray triangle;
     
     void onInit() {
-        
         shader = new ShaderProgram("resources/shader.vert", 
-                                   "resources/shader.frag");
-        triangle = new VertexArray(vertices, shader);
+                                   "resources/shader.frag",
+                                   ShaderAttribute("in_Position", 0, 3, GL_FLOAT),
+                                   ShaderAttribute("in_Normal", 1, 3, GL_FLOAT));
+        triangle = new VertexArray(vertices, normals, indices, shader);
     }
     
     void onRender() {
@@ -41,6 +50,7 @@ class Game : Application {
         glClear(GL_COLOR_BUFFER_BIT);
         triangle.draw();
         
+        //running = false;
     }
     
     void onCleanup() {
