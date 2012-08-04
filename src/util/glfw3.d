@@ -29,10 +29,10 @@ void writeGLFWInfo() {
     // Print GLFW info
     writefln(headingString("GLFW"));
     writefln("Version:  %s", to!string(glfwGetVersionString()));
-    writefln("Desktop mode: %s", dtmode.toString);
+    writefln("Desktop mode: %s", dtmode.toString());
     writefln("Available modes: %d", modecount);
     foreach (int i; 0..modecount) {
-        writefln(" %3d - %s", i, modes[i].toString);
+        writefln(" %3d - %s", i, modes[i].toString());
     }
     writeln();
 }
