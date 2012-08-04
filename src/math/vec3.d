@@ -1,6 +1,6 @@
 module odyssey.math.vec3;
 
-import std.math : abs, min, max, sqrt;
+import std.math : fabs, fmin, fmax, sqrt;
 
 // Constants
 const {
@@ -76,6 +76,11 @@ struct Vec3 {
         x = y = z = f;
         return this;
     }
+
+    /// Set the vector using a float array
+    void opAssign()(float[3] v) {
+        this.v = v;
+    }
     
     Vec3 opAssign()(Vec3 v) {
         x = v.x;
@@ -143,19 +148,21 @@ struct Vec3 {
 }
 
 Vec3 abs(Vec3 v) {
-    return Vec3(abs(v.x), abs(v.y), abs(v.z));
+    return Vec3(fabs(v.x),
+                fabs(v.y),
+                fabs(v.z));
 }
 
 /// Returns the minimum coordinates in one vector
 Vec3 min(Vec3 a, Vec3 b) {
-    return Vec3(min(a.x, b.x),
-                min(a.y, b.y),
-                min(a.z, b.z));
+    return Vec3(fmin(a.x, b.x),
+                fmin(a.y, b.y),
+                fmin(a.z, b.z));
 }
 
 /// Returns the minimum coordinates in one vector
 Vec3 max(Vec3 a, Vec3 b) {
-    return Vec3(max(a.x, b.x),
-                max(a.y, b.y),
-                max(a.z, b.z));
+    return Vec3(fmax(a.x, b.x),
+                fmax(a.y, b.y),
+                fmax(a.z, b.z));
 }

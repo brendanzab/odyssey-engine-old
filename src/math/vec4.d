@@ -1,7 +1,17 @@
 module odyssey.math.vec4;
 
-import std.math : abs, min, max, sqrt;
+import std.math : fabs, fmin, fmax, sqrt;
 import std.string;
+
+// Constants
+const {
+    Vec4 VEC4_ZERO      = Vec4( 0, 0, 0, 0 );
+    Vec4 VEC4_UNIT_X    = Vec4( 1, 0, 0, 0 );
+    Vec4 VEC4_UNIT_Y    = Vec4( 0, 1, 0, 0 );
+    Vec4 VEC4_UNIT_Z    = Vec4( 0, 0, 1, 0 );
+    Vec4 VEC4_UNIT_W    = Vec4( 0, 0, 0, 1 );
+    Vec4 VEC4_IDENTITY  = Vec4( 1, 1, 1, 1 );
+}
 
 struct Vec4 {
 
@@ -55,6 +65,11 @@ struct Vec4 {
     /// Set each component of the vector to the given float
     void opAssign()(float f) {
         x = y = z = w =f;
+    }
+
+    /// Set the vector using a float array
+    void opAssign()(float[4] v) {
+        this.v = v;
     }
 
     /// Add to vector: `this += v`
@@ -121,22 +136,25 @@ struct Vec4 {
 }
 
 Vec4 abs(Vec4 v) {
-    return Vec4(abs(v.x), abs(v.y), abs(v.z), abs(v.w));
+    return Vec4(fabs(v.x),
+                fabs(v.y),
+                fabs(v.z),
+                fabs(v.w));
 }
 
 /// Returns the minimum coordinates in one vector
 Vec4 min(Vec4 a, Vec4 b) {
-    return Vec4(min(a.x, b.x),
-                min(a.y, b.y),
-                min(a.z, b.z),
-                min(a.w, b.w));
+    return Vec4(fmin(a.x, b.x),
+                fmin(a.y, b.y),
+                fmin(a.z, b.z),
+                fmin(a.w, b.w));
 }
 
 /// Returns the minimum coordinates in one vector
 Vec4 max(Vec4 a, Vec4 b) {
-    return Vec4(max(a.x, b.x),
-                max(a.y, b.y),
-                max(a.z, b.z),
-                max(a.w, b.w));
+    return Vec4(fmax(a.x, b.x),
+                fmax(a.y, b.y),
+                fmax(a.z, b.z),
+                fmax(a.w, b.w));
 }
 

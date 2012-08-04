@@ -1,7 +1,7 @@
 module odyssey.math.aabb;
 
 import odyssey.math.vec3;
-import std.math : abs, min, max;
+import std.math : fabs, fmin, fmax;
 
 struct AABB {
     Vec3 center;
@@ -28,12 +28,12 @@ struct AABB {
     @property void  height(float f)  { size.x = f; }
     @property void  depth (float f)  { size.x = f; }
     
-    @property float minX() { return center.x - abs(size.x)/2; }
-    @property float minY() { return center.y - abs(size.y)/2; }
-    @property float minZ() { return center.z - abs(size.z)/2; }
-    @property float maxX() { return center.x + abs(size.x)/2; }
-    @property float maxY() { return center.y + abs(size.y)/2; }
-    @property float maxZ() { return center.z + abs(size.z)/2; }
+    @property float minX() { return center.x - fabs(size.x)/2; }
+    @property float minY() { return center.y - fabs(size.y)/2; }
+    @property float minZ() { return center.z - fabs(size.z)/2; }
+    @property float maxX() { return center.x + fabs(size.x)/2; }
+    @property float maxY() { return center.y + fabs(size.y)/2; }
+    @property float maxZ() { return center.z + fabs(size.z)/2; }
     
     void setBounds(float minX, float minY, float minZ,
                    float maxX, float maxY, float maxZ) {
@@ -63,23 +63,23 @@ struct AABB {
     
     void envelop(AABB other) {
         this.setBounds(
-            min(this.minX, other.minX),
-            min(this.minY, other.minY),
-            min(this.minZ, other.minZ),
-            max(this.maxX, other.maxX),
-            max(this.maxY, other.maxY),
-            max(this.maxZ, other.maxZ)
+            fmin(this.minX, other.minX),
+            fmin(this.minY, other.minY),
+            fmin(this.minZ, other.minZ),
+            fmax(this.maxX, other.maxX),
+            fmax(this.maxY, other.maxY),
+            fmax(this.maxZ, other.maxZ)
         );
     }
     
     void envelop(Vec3 v) {
         this.setBounds(
-            min(this.minX, v.x),
-            min(this.minY, v.y),
-            min(this.minZ, v.z),
-            max(this.maxX, v.x),
-            max(this.maxY, v.y),
-            max(this.maxZ, v.z)
+            fmin(this.minX, v.x),
+            fmin(this.minY, v.y),
+            fmin(this.minZ, v.z),
+            fmax(this.maxX, v.x),
+            fmax(this.maxY, v.y),
+            fmax(this.maxZ, v.z)
         );
     }
 }

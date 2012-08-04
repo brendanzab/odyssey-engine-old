@@ -1,6 +1,6 @@
 module odyssey.math.vec2;
 
-import std.math : abs, sqrt;
+import std.math : fabs, fmin, fmax, sqrt;
 
 // Constants
 const {
@@ -52,6 +52,11 @@ struct Vec2 {
     /// Set each component of the vector to the given float
     void opAssign()(float f) {
         x = y = f;
+    }
+
+    /// Set the vector using a float array
+    void opAssign()(float[2] v) {
+        this.v = v;
     }
 
     /// Add to vector: `this += v`
@@ -107,17 +112,18 @@ struct Vec2 {
 }
 
 Vec2 abs(Vec2 v) {
-    return Vec2(abs(v.x), abs(v.y));
+    return Vec2(fabs(v.x),
+                fabs(v.y));
 }
 
 /// Returns the minimum coordinates in one vector
 Vec2 min(Vec2 a, Vec2 b) {
-    return Vec2(min(a.x, b.x),
-                min(a.y, b.y));
+    return Vec2(fmin(a.x, b.x),
+                fmin(a.y, b.y));
 }
 
 /// Returns the minimum coordinates in one vector
 Vec2 max(Vec2 a, Vec2 b) {
-    return Vec2(max(a.x, b.x),
-                max(a.y, b.y));
+    return Vec2(fmax(a.x, b.x),
+                fmax(a.y, b.y));
 }
