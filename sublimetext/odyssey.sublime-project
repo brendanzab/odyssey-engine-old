@@ -1,19 +1,29 @@
 {
-    "folders":
-    [
-        {
-            "path": "../",
-            "name": "Project Source",
-            "folder_exclude_patterns": ["build"],
-            "file_exclude_patterns": ["*.sublime-workspace"]
-        },
-        {
-            "path": "/usr/local/src/Derelict3/import/derelict",
-            "name": "Derelict3"
-        },
-        {
-            "path": "/usr/local/src/dmd2/src/phobos/std",
-            "name": "Phobos"
-        }
-    ]
+	"folders":
+	[
+		{
+			"name": "odyssey",
+			"path": "/Users/brendan/Development/D/game-dev/odyssey-engine",
+			"file_exclude_patterns":
+			[
+				"*.sublime-workspace"
+			],
+			"folder_exclude_patterns":
+			[
+				"build"
+			]
+		},
+		{
+			"name": "-derelict3",
+			"path": "/usr/local/src/Derelict3/import/derelict"
+		},
+		{
+			"name": "-gl3n",
+			"path": "/usr/local/src/gl3n"
+		},
+		{
+			"name": "-phobos",
+			"path": "/usr/local/src/dmd2/src/phobos"
+		}
+	]
 }
