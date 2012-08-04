@@ -1,18 +1,12 @@
 # Odyssey Engine
 
-An experimental game engine written in D.
+This is little game engine I'm writing in D to teach myself about computer graphics.
 
 # Instructions
 
-Note: I've only built this on OSX!
+Note: I've only built this on OSX! You might have to change the makefiles to get them to work on your system.
 
-1. Go to the `test` directory
-2. Edit the makefile to match your system's configuration
-3. Build the project: `$ make`
-4. ...then run it: `$ make run`
-5. Alternatively, build and run in one step using `$ make br`
-
-If you use Sublime Text, for my own convenience I've set up a project that points to the Derelict3 and Phobos directories on my machine. You'll probably want to change those paths depending on where you placed them on your system.
+If you use Sublime Text, for my own convenience I've set up a project in the sublimetext folder, but you might have to change the paths depending on where you've put things.
 
 # Dependencies
 
